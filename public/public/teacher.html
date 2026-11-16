@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexuno: Teacher Dashboard</title>
+<style>
+  body{margin:0;font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;background:#f4f5fb;color:#14143a}
+  header{background:#0F0067;color:#fff;padding:14px 18px;font-size:22px;font-weight:700}
+  header span{color:#F26A10}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  .card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(15,0,103,.08)}
+  table{width:100%;border-collapse:collapse} td,th{padding:9px 6px;text-align:left;border-bottom:1px solid #e6e8f5}
+  .big{font-size:18px;font-weight:700;margin-bottom:10px;color:#0F0067}
+  .flag{background:#fff0d9;color:#a05a00;padding:2px 8px;border-radius:99px;font-size:13px}
+</style></head><body>
+<header>NEX<span>UNO</span> &nbsp;Teacher Dashboard</header>
+<main><div class="card">
+  <div class="big" id="sum">Loading...</div>
+  <table><thead><tr><th>#</th><th>Student</th><th>Lesson</th><th>Attempt ID</th><th>Version</th><th>Answers</th><th>Score</th><th>Received</th><th>Note</th></tr></thead><tbody id="rows"></tbody></table>
+</div></main>
+<script>
+async function load(){
+  const d = await (await fetch("/api/teacher")).json();
+  document.getElementById("sum").textContent = d.attempts.length + " submission" + (d.attempts.length===1?"":"s") + " received (current lesson version " + d.lessonVersion + ")";
+  document.getElementById("rows").innerHTML = d.attempts.map((a,i)=>"<tr><td>"+(i+1)+"</td><td>"+a.student+"</td><td>"+a.lessonTitle+"</td><td>"+a.id.slice(0,8)+"</td><td>v"+a.lessonVersion+"</td><td>"+Object.keys(a.answers).length+" of "+a.total+"</td><td>"+a.score+"/"+a.total+"</td><td>"+new Date(a.receivedAt).toLocaleTimeString()+"</td><td>"+(a.note?"<span class='flag'>"+a.note+"</span>":"")+"</td></tr>").join("") || "<tr><td colspan='9'>No submissions yet.</td></tr>";
+}
+load(); setInterval(load, 1500);
+</script></body></html>
