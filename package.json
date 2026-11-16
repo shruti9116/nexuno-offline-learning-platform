@@ -1,0 +1,8 @@
+{
+  "name": "nexuno-offline-learning",
+  "version": "0.1.0",
+  "description": "Nexuno (HackKumbh 2026, Offline Learning Platform): offline-first quiz app with lossless, duplicate-free sync",
+  "scripts": { "start": "node server.js", "test": "node e2e.js" },
+  "license": "MIT",
+  "devDependencies": { "playwright": "*" }
+}
