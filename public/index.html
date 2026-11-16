@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexuno: Offline Learning</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0F0067">
+<style>
+  :root{--navy:#0F0067;--blue:#002DFF;--orange:#F26A10;--ok:#12805c;--bad:#c0262d;--bg:#f4f5fb;--ink:#14143a}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--navy);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{margin:0;font-size:22px;letter-spacing:.3px}
+  header h1 span{color:var(--orange)}
+  .badge{padding:4px 12px;border-radius:99px;font-weight:700;font-size:14px}
+  .on{background:#d6f5e8;color:var(--ok)} .off{background:#ffe0e0;color:var(--bad)}
+  .tools{margin-left:auto;display:flex;gap:16px;font-size:14px;flex-wrap:wrap}
+  .tools label{display:flex;align-items:center;gap:6px;cursor:pointer}
+  main{max-width:760px;margin:0 auto;padding:16px}
+  .card{background:#fff;border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(15,0,103,.08)}
+  h2{margin:0 0 10px;font-size:20px;color:var(--navy)}
+  button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;background:var(--blue);color:#fff}
+  button.alt{background:var(--orange)} button.ghost{background:#e7e9fb;color:var(--navy)} button:disabled{opacity:.5;cursor:default}
+  button:hover{filter:brightness(1.12)} .opt:hover{border-color:#8da2ff} .row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #e6e8f5} .row:last-child{border:0} .row .meta{flex:1} .row .meta b{display:block;font-size:17px} .tick{color:var(--ok);font-weight:700}
+  .q{margin:14px 0} .q p{font-weight:700;margin:0 0 6px}
+  .opt{display:block;padding:10px 12px;border:2px solid #dcdff3;border-radius:10px;margin:6px 0;cursor:pointer}
+  .opt.sel{border-color:var(--blue);background:#eef1ff}
+  .opt input{margin-right:8px}
+  table{width:100%;border-collapse:collapse} td,th{padding:8px 6px;text-align:left;border-bottom:1px solid #e6e8f5;font-size:15px}
+  .st{padding:3px 10px;border-radius:99px;font-weight:700;font-size:13px;white-space:nowrap}
+  .s-saved{background:#e7e9fb;color:var(--navy)} .s-pending{background:#fff0d9;color:#a05a00}
+  .s-syncing{background:#dbe5ff;color:var(--blue)} .s-synced{background:#d6f5e8;color:var(--ok)} .s-failed{background:#ffe0e0;color:var(--bad)}
+  .muted{color:#5d5f86;font-size:14px}
+  nav{display:flex;gap:8px;margin-bottom:12px} nav button{background:#e7e9fb;color:var(--navy)} nav button.act{background:var(--navy);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>NEX<span>UNO</span> &nbsp;Offline Learning</h1>
+  <span id="net" class="badge on">Online</span>
+  <div class="tools">
+    <label><input type="checkbox" id="simOffline"> Simulate offline</label>
+    <label><input type="checkbox" id="simDrop"> Interrupt next upload</label>
+  </div>
+</header>
+<main>
+  <nav>
+    <button id="t-lesson" class="act">Lesson</button>
+    <button id="t-quiz">Quiz</button>
+    <button id="t-attempts">My submissions</button>
+  </nav>
+
+  <section id="v-lesson">
+    <div class="card">
+      <h2>My lessons</h2>
+      <p id="packState" class="muted">Choose the lessons you want on this device. Only what you pick is downloaded.</p>
+      <div id="catalog"></div>
+    </div>
+    <div class="card hide" id="lessonCard">
+      <div id="lessonBody"></div>
+      <button id="takeQuiz" class="alt" style="margin-top:8px">Take the quiz</button>
+    </div>
+  </section>
+
+  <section id="v-quiz" class="hide">
+    <div class="card">
+      <h2 id="quizTitle">Quiz</h2>
+      <p class="muted">Every answer is saved on this device the moment you pick it.</p>
+      <div id="quizForm"></div>
+      <p id="saveNote" class="muted"></p>
+      <button id="submit" class="alt">Submit quiz</button>
+    </div>
+  </section>
+
+  <section id="v-attempts" class="hide">
+    <div class="card">
+      <h2>My submissions</h2>
+      <table><thead><tr><th>Attempt</th><th>Status</th><th>Answers</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+      <p class="muted" id="attNote"></p>
+    </div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
