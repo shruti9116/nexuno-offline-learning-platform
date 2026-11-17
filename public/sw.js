@@ -1,10 +1,92 @@
-// Service worker: caches the app shell so the app opens with no network.
-const CACHE = "nexuno-shell-v1";
-const SHELL = ["/", "/index.html", "/app.js", "/manifest.json"];
-self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });
-self.addEventListener("activate", (e) => { e.waitUntil(self.clients.claim()); });
-self.addEventListener("fetch", (e) => {
-  const u = new URL(e.request.url);
-  if (e.request.method !== "GET" || u.pathname.startsWith("/api/")) return; // data goes through IndexedDB
-  e.respondWith(fetch(e.request).then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); return r; }).catch(() => caches.match(e.request)));
+
+"use strict";
+
+// NEXUNO Learn - Offline Service Worker
+
+const CACHE = "nexuno-shell-v2";
+
+const SHELL = [
+  "/",
+  "/index.html",
+  "/app.js",
+  "/teacher.html",
+  "/manifest.json"
+];
+
+// Install and cache the application files.
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then(cache => cache.addAll(SHELL))
+      .then(() => self.skipWaiting())
+  );
+});
+
+// Remove old application caches.
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys =>
+        Promise.all(
+          keys
+            .filter(key => key.startsWith("nexuno-shell-") && key !== CACHE)
+            .map(key => caches.delete(key))
+        )
+      )
+      .then(() => self.clients.claim())
+  );
+});
+
+// Handle application requests.
+self.addEventListener("fetch", event => {
+  const request = event.request;
+  const url = new URL(request.url);
+
+  // Never cache API requests or non-GET requests.
+  if (
+    request.method !== "GET" ||
+    url.origin !== self.location.origin ||
+    url.pathname.startsWith("/api/")
+  ) {
+    return;
+  }
+
+  event.respondWith(
+    fetch(request)
+      .then(response => {
+        if (response && response.ok && response.type === "basic") {
+          const copy = response.clone();
+
+          caches.open(CACHE).then(cache => {
+            cache.put(request, copy);
+          });
+        }
+
+        return response;
+      })
+      .catch(async () => {
+        const cached = await caches.match(request);
+
+        if (cached) {
+          return cached;
+        }
+
+        // If an offline page navigation is requested,
+        // open the cached application homepage.
+        if (request.mode === "navigate") {
+          const homepage = await caches.match("/index.html");
+
+          if (homepage) {
+            return homepage;
+          }
+        }
+
+        return new Response("You are offline. This resource is not cached.", {
+          status: 503,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8"
+          }
+        });
+      })
+  );
 });
