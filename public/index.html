@@ -1,327 +1,404 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101d3a">
-<meta name="description" content="NEXUNO Learn - Learn anytime, even without internet connectivity.">
-<title>NEXUNO Learn | Offline Learning Platform</title>
+<meta name="description" content="NEXUNO Learn - An offline-first learning platform.">
+<title>NEXUNO Learn | Learning Platform</title>
 <link rel="manifest" href="manifest.json">
 
 <style>
-:root{
+:root {
   --navy:#101d3a;
-  --navy2:#192c50;
-  --blue:#3867f5;
-  --blue-light:#edf2ff;
+  --navy-light:#1c3156;
+  --blue:#4169f5;
+  --blue-dark:#3154d8;
+  --blue-soft:#edf2ff;
   --orange:#f28a38;
   --green:#16845d;
   --red:#c43d4b;
-  --bg:#f4f6fb;
-  --white:#ffffff;
+  --bg:#f5f7fc;
+  --white:#fff;
   --ink:#202b42;
-  --muted:#778198;
-  --border:#e6eaf2;
-  --shadow:0 5px 22px rgba(24,42,75,.06);
+  --muted:#7b879d;
+  --border:#e7ebf3;
+  --shadow:0 8px 28px rgba(24,42,75,.055);
 }
 
-*{box-sizing:border-box}
+* { box-sizing:border-box; }
 
-body{
+body {
   margin:0;
   font-family:Inter,"Segoe UI",Arial,sans-serif;
   background:var(--bg);
   color:var(--ink);
 }
 
-button{
+button {
   font:inherit;
   font-weight:650;
   border:0;
-  border-radius:9px;
+  border-radius:10px;
   padding:11px 17px;
   cursor:pointer;
   background:var(--blue);
   color:white;
-  transition:.2s;
+  transition:background .2s,transform .2s;
 }
 
-button:hover{filter:brightness(1.08)}
-button:disabled{opacity:.5;cursor:not-allowed}
-button.alt{background:var(--orange)}
-button.ghost{background:var(--blue-light);color:var(--navy)}
-button:focus-visible{
+button:hover { background:var(--blue-dark); }
+button:active { transform:scale(.98); }
+button:disabled { opacity:.5;cursor:not-allowed; }
+button.alt { background:var(--orange); }
+button.alt:hover { background:#df7626; }
+button.ghost { background:var(--blue-soft);color:var(--navy); }
+
+button:focus-visible,
+input:focus-visible {
   outline:3px solid #9db4ff;
-  outline-offset:2px;
+  outline-offset:3px;
 }
 
-header{
+header {
   background:var(--navy);
   color:white;
-  padding:15px 5%;
+  min-height:76px;
+  padding:13px 5%;
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:16px;
   flex-wrap:wrap;
+  box-shadow:0 3px 15px rgba(16,29,58,.12);
 }
 
-.brand{
+.brand {
   display:flex;
   align-items:center;
   gap:11px;
 }
 
-.logo{
-  width:39px;
-  height:39px;
-  border-radius:11px;
+.logo {
+  width:42px;
+  height:42px;
+  border-radius:12px;
   display:grid;
   place-items:center;
-  background:var(--blue);
+  background:linear-gradient(135deg,#527cff,#3154d8);
   color:white;
-  font-size:19px;
-  font-weight:800;
+  font-size:21px;
+  font-weight:850;
+  box-shadow:0 4px 12px rgba(65,105,245,.3);
 }
 
-header h1{
+header h1 {
   margin:0;
   font-size:21px;
-  letter-spacing:.5px;
+  letter-spacing:.3px;
 }
 
-header h1 span{color:#8eafff}
+header h1 span { color:#8eafff; }
 
-.brand small{
+.brand small {
   display:block;
   color:#b9c5dc;
-  font-size:11px;
-  margin-top:2px;
-  letter-spacing:1.2px;
+  font-size:10px;
+  margin-top:3px;
+  letter-spacing:1.1px;
 }
 
-.badge{
-  padding:6px 12px;
+.badge {
+  padding:7px 12px;
   border-radius:30px;
   font-size:12px;
   font-weight:750;
+  white-space:nowrap;
 }
 
-.on{background:#d9f7e9;color:var(--green)}
-.off{background:#ffe3e5;color:var(--red)}
+.on { background:#d9f7e9;color:var(--green); }
+.off { background:#ffe3e5;color:var(--red); }
 
-.tools{
+.tools {
   margin-left:auto;
   display:flex;
-  gap:16px;
+  align-items:center;
+  gap:17px;
   flex-wrap:wrap;
   font-size:12px;
   color:#e1e7f3;
 }
 
-.tools label{
+.tools label {
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:7px;
   cursor:pointer;
 }
 
-.tools input{accent-color:var(--orange)}
+.tools input { accent-color:var(--orange); }
 
-main{
-  max-width:1120px;
+main {
+  max-width:1160px;
   margin:0 auto;
-  padding:28px 22px 45px;
+  padding:30px 24px 48px;
 }
 
-.welcome{
-  background:linear-gradient(120deg,var(--navy),#263f72);
+.welcome {
+  background:linear-gradient(115deg,#101d3a 0%,#1c3768 65%,#3154a1 100%);
   color:white;
-  border-radius:17px;
-  padding:27px 30px;
-  margin-bottom:23px;
+  border-radius:19px;
+  padding:34px;
+  margin-bottom:26px;
   position:relative;
   overflow:hidden;
+  box-shadow:0 12px 30px rgba(16,29,58,.12);
 }
 
-.welcome:after{
+.welcome:after {
   content:"";
   position:absolute;
-  width:190px;
-  height:190px;
-  border:35px solid rgba(255,255,255,.06);
+  width:230px;
+  height:230px;
+  border:38px solid rgba(255,255,255,.055);
   border-radius:50%;
-  right:40px;
-  top:-75px;
+  right:35px;
+  top:-100px;
+  pointer-events:none;
 }
 
-.welcome .eyebrow{
+.welcome:before {
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  border:25px solid rgba(255,255,255,.045);
+  border-radius:50%;
+  right:175px;
+  bottom:-100px;
+  pointer-events:none;
+}
+
+.welcome-content {
+  position:relative;
+  z-index:1;
+}
+
+.welcome .eyebrow {
   color:#a9c1ff;
   font-size:11px;
-  font-weight:750;
-  letter-spacing:1.7px;
-  margin:0 0 9px;
+  font-weight:800;
+  letter-spacing:1.8px;
+  margin:0 0 12px;
 }
 
-.welcome h2{
+.welcome h2 {
   color:white;
-  font-size:27px;
-  margin:0 0 8px;
+  font-size:30px;
+  margin:0 0 10px;
+  line-height:1.25;
 }
 
-.welcome p{
+.welcome p {
   color:#d1daed;
   margin:0;
   font-size:14px;
-  max-width:580px;
-  line-height:1.6;
+  max-width:590px;
+  line-height:1.7;
 }
 
-.section-heading{
+.welcome-note {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:19px;
+  padding:8px 12px;
+  border-radius:30px;
+  background:rgba(255,255,255,.11);
+  color:#e9efff;
+  font-size:11px;
+  font-weight:650;
+}
+
+.section-heading {
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  margin:25px 0 13px;
+  margin:27px 0 15px;
 }
 
-.section-heading h2{
+.section-heading h2 {
   margin:0;
   color:var(--navy);
-  font-size:19px;
+  font-size:20px;
 }
 
-.section-heading p{
-  margin:4px 0 0;
+.section-heading p {
+  margin:5px 0 0;
   color:var(--muted);
   font-size:13px;
+  line-height:1.5;
 }
 
-nav{
+nav {
   display:flex;
-  gap:8px;
+  gap:7px;
   padding:5px;
   background:#e9edf6;
   border-radius:12px;
   width:fit-content;
   max-width:100%;
   overflow-x:auto;
-  margin-bottom:20px;
+  margin-bottom:23px;
 }
 
-nav button{
+nav button {
   background:transparent;
   color:#66718a;
-  padding:10px 17px;
+  padding:11px 19px;
   white-space:nowrap;
   font-size:13px;
 }
 
-nav button.act{
-  background:var(--navy);
-  color:white;
-  box-shadow:0 2px 7px rgba(16,29,58,.16);
+nav button:hover {
+  background:#f6f8fc;
+  color:var(--navy);
 }
 
-.card{
+nav button.act {
+  background:var(--navy);
+  color:white;
+  box-shadow:0 3px 9px rgba(16,29,58,.15);
+}
+
+.card {
   background:var(--white);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:21px;
-  margin-bottom:17px;
+  border-radius:15px;
+  padding:23px;
+  margin-bottom:18px;
   box-shadow:var(--shadow);
 }
 
-.card h2{
+.card h2 {
   color:var(--navy);
-  font-size:18px;
-  margin:0 0 10px;
+  font-size:17px;
+  margin:0 0 9px;
 }
 
-.muted{
+.muted {
   color:var(--muted);
   font-size:13px;
-  line-height:1.6;
+  line-height:1.65;
 }
 
-.row{
+#packState {
+  margin:0 0 13px;
+}
+
+.row {
   display:flex;
   align-items:center;
-  gap:13px;
-  padding:15px 5px;
+  gap:15px;
+  padding:17px 7px;
   border-bottom:1px solid var(--border);
 }
 
-.row:last-child{border:0}
+.row:last-child { border-bottom:0; }
 
-.row .meta{flex:1;min-width:0}
+.row .meta {
+  flex:1;
+  min-width:0;
+}
 
-.row .meta b{
+.row .meta b {
   display:block;
   font-size:15px;
   color:var(--ink);
-  margin-bottom:4px;
+  margin-bottom:5px;
 }
 
-.row .meta small{
+.row .meta small {
   color:var(--muted);
   font-size:12px;
+  line-height:1.5;
 }
 
-.tick{
+.row button {
+  flex-shrink:0;
+}
+
+.tick {
   color:var(--green);
   font-weight:750;
 }
 
-.q{margin:18px 0}
-
-.q p{
-  font-weight:700;
-  margin:0 0 10px;
-  line-height:1.5;
+#lessonCard {
+  border-top:3px solid var(--blue);
+  animation:appear .25s ease;
 }
 
-.opt{
+#lessonBody {
+  line-height:1.8;
+  font-size:14px;
+}
+
+#takeQuiz { margin-top:15px; }
+
+.q { margin:21px 0; }
+
+.q p {
+  font-weight:750;
+  margin:0 0 12px;
+  line-height:1.55;
+}
+
+.opt {
   display:block;
-  padding:12px 14px;
+  padding:13px 15px;
   border:1px solid var(--border);
-  border-radius:9px;
-  margin:8px 0;
+  border-radius:10px;
+  margin:9px 0;
   cursor:pointer;
   font-size:14px;
   transition:.2s;
 }
 
-.opt:hover{
+.opt:hover {
   border-color:#9db4ff;
   background:#f8faff;
 }
 
-.opt.sel{
+.opt.sel {
   border-color:var(--blue);
-  background:var(--blue-light);
+  background:var(--blue-soft);
 }
 
-.opt input{
-  margin-right:9px;
+.opt input {
+  margin-right:10px;
   accent-color:var(--blue);
 }
 
-table{
+table {
   width:100%;
   border-collapse:collapse;
   min-width:450px;
 }
 
-.table-wrap{overflow-x:auto}
+.table-wrap {
+  overflow-x:auto;
+  margin-top:12px;
+}
 
-td,th{
-  padding:13px 10px;
+td,th {
+  padding:14px 11px;
   text-align:left;
   border-bottom:1px solid var(--border);
   font-size:13px;
 }
 
-th{
+th {
   color:#69758d;
   font-size:11px;
   text-transform:uppercase;
@@ -329,55 +406,91 @@ th{
   background:#f8f9fc;
 }
 
-.st{
+.st {
   display:inline-block;
-  padding:5px 10px;
+  padding:6px 10px;
   border-radius:30px;
-  font-weight:700;
+  font-weight:750;
   font-size:11px;
   white-space:nowrap;
 }
 
-.s-saved{background:#edf0fb;color:var(--navy)}
-.s-pending{background:#fff1dc;color:#a05a00}
-.s-syncing{background:#e4ebff;color:var(--blue)}
-.s-synced{background:#dff7eb;color:var(--green)}
-.s-failed{background:#ffe5e7;color:var(--red)}
+.s-saved { background:#edf0fb;color:var(--navy); }
+.s-pending { background:#fff1dc;color:#a05a00; }
+.s-syncing { background:#e4ebff;color:var(--blue); }
+.s-synced { background:#dff7eb;color:var(--green); }
+.s-failed { background:#ffe5e7;color:var(--red); }
 
-.hide{display:none!important}
+.hide { display:none!important; }
 
-#lessonCard{border-top:3px solid var(--blue)}
+#saveNote,#attNote { margin-top:13px; }
 
-#lessonBody{
-  line-height:1.7;
-  font-size:14px;
-}
-
-#saveNote,#attNote{margin-top:12px}
-
-footer{
+footer {
   text-align:center;
-  padding:20px;
+  padding:23px 15px;
   color:#8791a5;
   font-size:12px;
+  border-top:1px solid var(--border);
 }
 
-@media(max-width:650px){
-  header{padding:13px 16px}
-  header h1{font-size:18px}
-  .tools{
+@keyframes appear {
+  from { opacity:0;transform:translateY(5px); }
+  to { opacity:1;transform:translateY(0); }
+}
+
+@media(max-width:700px) {
+  header { padding:13px 16px; }
+  header h1 { font-size:19px; }
+
+  .tools {
     margin-left:0;
     width:100%;
-    gap:12px;
+    gap:13px;
   }
-  main{padding:18px 13px 35px}
-  .welcome{padding:23px 19px}
-  .welcome h2{font-size:23px}
-  .card{padding:16px}
-  nav{width:100%}
-  nav button{flex:1;padding:10px 11px}
-  .row{flex-wrap:wrap}
-  .row button{font-size:12px;padding:9px 12px}
+
+  main { padding:20px 14px 36px; }
+
+  .welcome {
+    padding:27px 21px;
+    border-radius:15px;
+  }
+
+  .welcome h2 { font-size:25px; }
+
+  .welcome:after {
+    right:-100px;
+  }
+
+  .card { padding:17px; }
+
+  nav { width:100%; }
+
+  nav button {
+    flex:1;
+    padding:11px 10px;
+  }
+
+  .row {
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .row .meta { flex-basis:65%; }
+
+  .row button {
+    font-size:12px;
+    padding:10px 12px;
+  }
+
+  .section-heading h2 { font-size:18px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
 }
 </style>
 </head>
@@ -386,14 +499,14 @@ footer{
 
 <header>
   <div class="brand">
-    <div class="logo">N</div>
+    <div class="logo" aria-hidden="true">N</div>
     <div>
       <h1>NEX<span>UNO</span> Learn</h1>
       <small>LEARNING WITHOUT CONNECTIVITY BARRIERS</small>
     </div>
   </div>
 
-  <span id="net" class="badge on">Online</span>
+  <span id="net" class="badge on" role="status" aria-live="polite">Online</span>
 
   <div class="tools">
     <label>
@@ -411,16 +524,23 @@ footer{
 <main>
 
   <section class="welcome">
-    <p class="eyebrow">NEXUNO LEARNING PLATFORM</p>
-    <h2>Learn beyond the internet.</h2>
-    <p>
-      Access your downloaded lessons, practise quizzes and keep learning
-      even when your internet connection is unavailable.
-    </p>
+    <div class="welcome-content">
+      <p class="eyebrow">WELCOME TO NEXUNO LEARN</p>
+      <h2>Knowledge has no boundaries.</h2>
+      <p>
+        Download your lessons, learn at your own pace and complete quizzes
+        even without an internet connection. Your learning progress stays
+        on your device until it can sync.
+      </p>
+      <div class="welcome-note">
+        <span aria-hidden="true">●</span>
+        LEARN ONLINE. CONTINUE OFFLINE.
+      </div>
+    </div>
   </section>
 
-  <nav>
-    <button id="t-lesson" class="act">My Learning</button>
+  <nav aria-label="Main navigation">
+    <button id="t-lesson" class="act" aria-current="page">My Learning</button>
     <button id="t-quiz">Quizzes</button>
     <button id="t-attempts">My Submissions</button>
   </nav>
@@ -430,21 +550,21 @@ footer{
     <div class="section-heading">
       <div>
         <h2>Learning Library</h2>
-        <p>Choose lessons to download and access them offline.</p>
+        <p>Explore your available learning materials.</p>
       </div>
     </div>
 
     <div class="card">
       <h2>Available Lessons</h2>
       <p id="packState" class="muted">
-        Choose the lessons you want on this device. Only what you pick is downloaded.
+        Choose the lessons you want on this device. Only selected lessons are downloaded.
       </p>
       <div id="catalog"></div>
     </div>
 
     <div class="card hide" id="lessonCard">
       <div id="lessonBody"></div>
-      <button id="takeQuiz" class="alt" style="margin-top:12px">
+      <button id="takeQuiz" class="alt">
         Take the quiz
       </button>
     </div>
@@ -456,7 +576,7 @@ footer{
     <div class="section-heading">
       <div>
         <h2>Knowledge Check</h2>
-        <p>Test your understanding of the lesson.</p>
+        <p>Test your understanding and save your progress.</p>
       </div>
     </div>
 
@@ -464,11 +584,12 @@ footer{
       <h2 id="quizTitle">Quiz</h2>
       <p class="muted">
         Your answers are saved on this device as you select them.
+        You can continue your attempt even if the internet disconnects.
       </p>
 
       <div id="quizForm"></div>
 
-      <p id="saveNote" class="muted"></p>
+      <p id="saveNote" class="muted" role="status" aria-live="polite"></p>
 
       <button id="submit" class="alt">Submit Quiz</button>
     </div>
@@ -480,7 +601,7 @@ footer{
     <div class="section-heading">
       <div>
         <h2>My Submissions</h2>
-        <p>Track your quiz attempts and synchronization status.</p>
+        <p>Monitor your quiz attempts and upload status.</p>
       </div>
     </div>
 
@@ -494,14 +615,14 @@ footer{
               <th>Attempt</th>
               <th>Status</th>
               <th>Answers</th>
-              <th></th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="rows"></tbody>
         </table>
       </div>
 
-      <p class="muted" id="attNote"></p>
+      <p class="muted" id="attNote" role="status" aria-live="polite"></p>
     </div>
 
   </section>
