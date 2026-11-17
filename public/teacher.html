@@ -1,26 +1,468 @@
+
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nexuno: Teacher Dashboard</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101d3a">
+<title>NEXUNO Learn | Teacher Dashboard</title>
+
 <style>
-  body{margin:0;font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;background:#f4f5fb;color:#14143a}
-  header{background:#0F0067;color:#fff;padding:14px 18px;font-size:22px;font-weight:700}
-  header span{color:#F26A10}
-  main{max-width:900px;margin:0 auto;padding:16px}
-  .card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(15,0,103,.08)}
-  table{width:100%;border-collapse:collapse} td,th{padding:9px 6px;text-align:left;border-bottom:1px solid #e6e8f5}
-  .big{font-size:18px;font-weight:700;margin-bottom:10px;color:#0F0067}
-  .flag{background:#fff0d9;color:#a05a00;padding:2px 8px;border-radius:99px;font-size:13px}
-</style></head><body>
-<header>NEX<span>UNO</span> &nbsp;Teacher Dashboard</header>
-<main><div class="card">
-  <div class="big" id="sum">Loading...</div>
-  <table><thead><tr><th>#</th><th>Student</th><th>Lesson</th><th>Attempt ID</th><th>Version</th><th>Answers</th><th>Score</th><th>Received</th><th>Note</th></tr></thead><tbody id="rows"></tbody></table>
-</div></main>
-<script>
-async function load(){
-  const d = await (await fetch("/api/teacher")).json();
-  document.getElementById("sum").textContent = d.attempts.length + " submission" + (d.attempts.length===1?"":"s") + " received (current lesson version " + d.lessonVersion + ")";
-  document.getElementById("rows").innerHTML = d.attempts.map((a,i)=>"<tr><td>"+(i+1)+"</td><td>"+a.student+"</td><td>"+a.lessonTitle+"</td><td>"+a.id.slice(0,8)+"</td><td>v"+a.lessonVersion+"</td><td>"+Object.keys(a.answers).length+" of "+a.total+"</td><td>"+a.score+"/"+a.total+"</td><td>"+new Date(a.receivedAt).toLocaleTimeString()+"</td><td>"+(a.note?"<span class='flag'>"+a.note+"</span>":"")+"</td></tr>").join("") || "<tr><td colspan='9'>No submissions yet.</td></tr>";
+:root{
+  --navy:#101d3a;
+  --blue:#3867f5;
+  --bg:#f4f6fb;
+  --white:#fff;
+  --ink:#202b42;
+  --muted:#778198;
+  --border:#e6eaf2;
+  --green:#16845d;
+  --orange:#a05a00;
+  --shadow:0 5px 22px rgba(24,42,75,.06);
 }
-load(); setInterval(load, 1500);
-</script></body></html>
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+
+header{
+  background:var(--navy);
+  color:white;
+  padding:17px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.logo{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:var(--blue);
+  font-size:19px;
+  font-weight:800;
+}
+
+header h1{
+  font-size:20px;
+  margin:0;
+}
+
+header h1 span{color:#8eafff}
+
+header small{
+  display:block;
+  color:#b9c5dc;
+  font-size:11px;
+  margin-top:3px;
+  letter-spacing:1px;
+}
+
+.status{
+  color:#d9f7e9;
+  font-size:12px;
+}
+
+main{
+  max-width:1150px;
+  margin:auto;
+  padding:28px 20px 45px;
+}
+
+.welcome{
+  background:linear-gradient(120deg,#101d3a,#263f72);
+  color:white;
+  padding:25px;
+  border-radius:15px;
+  margin-bottom:22px;
+}
+
+.welcome h2{
+  margin:0 0 7px;
+  font-size:24px;
+}
+
+.welcome p{
+  margin:0;
+  color:#d1daed;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.heading{
+  margin:25px 0 14px;
+}
+
+.heading h2{
+  color:var(--navy);
+  font-size:19px;
+  margin:0 0 5px;
+}
+
+.heading p{
+  color:var(--muted);
+  font-size:13px;
+  margin:0;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:var(--white);
+  padding:19px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  box-shadow:var(--shadow);
+}
+
+.stat small{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:9px;
+}
+
+.stat strong{
+  display:block;
+  color:var(--navy);
+  font-size:27px;
+}
+
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.card h3{
+  color:var(--navy);
+  font-size:17px;
+  margin:0 0 7px;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.table-wrap{
+  overflow-x:auto;
+  margin-top:15px;
+}
+
+table{
+  width:100%;
+  min-width:950px;
+  border-collapse:collapse;
+}
+
+th,td{
+  text-align:left;
+  padding:13px 11px;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+  vertical-align:top;
+}
+
+th{
+  color:#69758d;
+  background:#f8f9fc;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+tbody tr:hover{background:#f9faff}
+
+.id{
+  color:var(--blue);
+  font-family:monospace;
+  font-size:12px;
+}
+
+.score{
+  color:var(--green);
+  font-weight:750;
+}
+
+.flag{
+  display:inline-block;
+  background:#fff1dc;
+  color:var(--orange);
+  padding:5px 9px;
+  border-radius:7px;
+  font-size:11px;
+  line-height:1.4;
+  max-width:210px;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:10px 15px;
+  background:var(--blue);
+  color:white;
+  font:inherit;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{filter:brightness(1.1)}
+
+.empty{
+  text-align:center;
+  padding:30px 15px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.error{
+  color:#c43d4b;
+  background:#ffe5e7;
+  padding:12px;
+  border-radius:9px;
+  font-size:13px;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#8791a5;
+  font-size:12px;
+}
+
+@media(max-width:650px){
+  header{padding:14px 17px}
+  main{padding:19px 13px 35px}
+  .stats{grid-template-columns:1fr}
+  .stat{padding:15px}
+  .stat strong{font-size:23px}
+  .welcome{padding:21px}
+  .welcome h2{font-size:21px}
+  .card{padding:14px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">N</div>
+    <div>
+      <h1>NEX<span>UNO</span> Learn</h1>
+      <small>TEACHER DASHBOARD</small>
+    </div>
+  </div>
+
+  <div class="status" id="connection">● Connecting...</div>
+</header>
+
+<main>
+
+  <section class="welcome">
+    <h2>Welcome, Teacher</h2>
+    <p>
+      Monitor student quiz submissions, review scores and track
+      offline learning activity from one dashboard.
+    </p>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <small>Total Submissions</small>
+      <strong id="total">—</strong>
+    </div>
+
+    <div class="stat">
+      <small>Students Participated</small>
+      <strong id="students">—</strong>
+    </div>
+
+    <div class="stat">
+      <small>Current Lesson Version</small>
+      <strong id="version">—</strong>
+    </div>
+  </section>
+
+  <section class="heading">
+    <h2>Student Submissions</h2>
+    <p>Quiz attempts received by the server.</p>
+  </section>
+
+  <section class="card">
+    <h3>Submission Records</h3>
+    <p class="muted" id="updated">Loading submission records...</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student</th>
+            <th>Lesson</th>
+            <th>Attempt ID</th>
+            <th>Version</th>
+            <th>Answers</th>
+            <th>Score</th>
+            <th>Received</th>
+            <th>Version Note</th>
+          </tr>
+        </thead>
+
+        <tbody id="rows">
+          <tr>
+            <td colspan="9" class="empty">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  NEXUNO Learn · Learning Without Connectivity Barriers
+</footer>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+function safe(value){
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+function formatDate(value){
+  if(!value) return "—";
+
+  const date = new Date(value);
+
+  if(Number.isNaN(date.getTime())) return "—";
+
+  return date.toLocaleString();
+}
+
+async function loadDashboard(){
+  const connection = $("connection");
+
+  try{
+    const response = await fetch("/api/teacher", {
+      cache:"no-store"
+    });
+
+    if(!response.ok){
+      throw new Error("Unable to load teacher records.");
+    }
+
+    const data = await response.json();
+    const attempts = Array.isArray(data.attempts)
+      ? data.attempts
+      : [];
+
+    connection.textContent = "● Connected";
+    connection.style.color = "#d9f7e9";
+
+    $("total").textContent = attempts.length;
+
+    const uniqueStudents = new Set(
+      attempts.map(a => a.student || "Student")
+    );
+
+    $("students").textContent = uniqueStudents.size;
+    $("version").textContent = "v" + data.lessonVersion;
+
+    $("updated").textContent =
+      "Last updated: " + new Date().toLocaleTimeString();
+
+    const sorted = [...attempts].sort((a,b) =>
+      new Date(b.receivedAt || 0) -
+      new Date(a.receivedAt || 0)
+    );
+
+    if(sorted.length === 0){
+      $("rows").innerHTML =
+        '<tr><td colspan="9" class="empty">' +
+        'No submissions received yet.' +
+        '</td></tr>';
+      return;
+    }
+
+    $("rows").innerHTML = sorted.map((a,index) => {
+      const answerCount = a.answers
+        ? Object.keys(a.answers).length
+        : 0;
+
+      const total = Number(a.total) || 0;
+
+      const note = a.note
+        ? '<span class="flag">' + safe(a.note) + '</span>'
+        : "—";
+
+      return `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${safe(a.student || "Student")}</td>
+          <td>${safe(a.lessonTitle || a.lessonId)}</td>
+          <td><span class="id">${safe(
+            String(a.id || "").slice(0,8)
+          )}</span></td>
+          <td>v${safe(a.lessonVersion || 1)}</td>
+          <td>${answerCount} of ${total}</td>
+          <td><span class="score">${
+            Number(a.score) || 0
+          }/${total}</span></td>
+          <td>${safe(formatDate(a.receivedAt))}</td>
+          <td>${note}</td>
+        </tr>
+      `;
+    }).join("");
+
+  }catch(error){
+    connection.textContent = "● Disconnected";
+    connection.style.color = "#ffb5bb";
+
+    $("updated").innerHTML =
+      '<span class="error">' +
+      safe(error.message) +
+      '</span>';
+  }
+}
+
+loadDashboard();
+setInterval(loadDashboard, 3000);
+</script>
+
+</body>
+</html>
