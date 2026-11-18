@@ -1,271 +1,373 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101d3a">
-<title>NEXUNO Learn | Teacher Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101044">
+  <meta name="description" content="NEXUNO Learn teacher dashboard">
+  <title>NEXUNO Learn | Teacher Dashboard</title>
 
-<style>
-:root{
-  --navy:#101d3a;
-  --blue:#3867f5;
-  --bg:#f4f6fb;
-  --white:#fff;
-  --ink:#202b42;
-  --muted:#778198;
-  --border:#e6eaf2;
-  --green:#16845d;
-  --orange:#a05a00;
-  --shadow:0 5px 22px rgba(24,42,75,.06);
-}
+  <style>
+    :root {
+      --navy: #101044;
+      --blue: #493bff;
+      --purple: #7965ff;
+      --bg: #f5f6ff;
+      --white: #fff;
+      --ink: #191936;
+      --muted: #777895;
+      --border: #e8e8f5;
+      --green: #16845d;
+      --orange: #a05a00;
+      --shadow: 0 12px 35px rgba(30,29,90,.07);
+    }
 
-*{box-sizing:border-box}
+    * {
+      box-sizing: border-box;
+    }
 
-body{
-  margin:0;
-  font-family:Inter,"Segoe UI",Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
 
-header{
-  background:var(--navy);
-  color:white;
-  padding:17px 5%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  flex-wrap:wrap;
-}
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 17px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      box-shadow: 0 5px 20px rgba(16,16,68,.15);
+    }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.logo{
-  width:39px;
-  height:39px;
-  display:grid;
-  place-items:center;
-  border-radius:11px;
-  background:var(--blue);
-  font-size:19px;
-  font-weight:800;
-}
+    .logo {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg,var(--blue),var(--purple));
+      font-size: 21px;
+      font-weight: 850;
+    }
 
-header h1{
-  font-size:20px;
-  margin:0;
-}
+    header h1 {
+      font-size: 21px;
+      margin: 0;
+      letter-spacing: -.5px;
+    }
 
-header h1 span{color:#8eafff}
+    header h1 span {
+      color: #a99eff;
+    }
 
-header small{
-  display:block;
-  color:#b9c5dc;
-  font-size:11px;
-  margin-top:3px;
-  letter-spacing:1px;
-}
+    header small {
+      display: block;
+      color: #c4c2ec;
+      font-size: 10px;
+      margin-top: 4px;
+      letter-spacing: 1.5px;
+    }
 
-.status{
-  color:#d9f7e9;
-  font-size:12px;
-}
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 30px;
+      background: rgba(255,255,255,.08);
+      font-size: 12px;
+      color: #d9f7e9;
+    }
 
-main{
-  max-width:1150px;
-  margin:auto;
-  padding:28px 20px 45px;
-}
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 30px 20px 45px;
+    }
 
-.welcome{
-  background:linear-gradient(120deg,#101d3a,#263f72);
-  color:white;
-  padding:25px;
-  border-radius:15px;
-  margin-bottom:22px;
-}
+    .welcome {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(120deg,#17165c,#3730b9 65%,#7055ed);
+      color: white;
+      padding: 34px;
+      border-radius: 24px;
+      margin-bottom: 25px;
+      box-shadow: 0 16px 40px rgba(56,48,175,.16);
+    }
 
-.welcome h2{
-  margin:0 0 7px;
-  font-size:24px;
-}
+    .welcome:after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -55px;
+      top: -105px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+    }
 
-.welcome p{
-  margin:0;
-  color:#d1daed;
-  font-size:14px;
-  line-height:1.6;
-}
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+    }
 
-.heading{
-  margin:25px 0 14px;
-}
+    .eyebrow {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.1);
+      padding: 7px 12px;
+      border-radius: 30px;
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      margin-bottom: 15px;
+    }
 
-.heading h2{
-  color:var(--navy);
-  font-size:19px;
-  margin:0 0 5px;
-}
+    .welcome h2 {
+      margin: 0 0 10px;
+      font-size: clamp(25px,4vw,36px);
+      letter-spacing: -.8px;
+    }
 
-.heading p{
-  color:var(--muted);
-  font-size:13px;
-  margin:0;
-}
+    .welcome p {
+      margin: 0;
+      color: #e1dfff;
+      font-size: 14px;
+      line-height: 1.8;
+      max-width: 610px;
+    }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
-  margin-bottom:22px;
-}
+    .heading {
+      margin: 30px 0 15px;
+    }
 
-.stat{
-  background:var(--white);
-  padding:19px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  box-shadow:var(--shadow);
-}
+    .heading h2 {
+      color: var(--navy);
+      font-size: 21px;
+      margin: 0 0 6px;
+    }
 
-.stat small{
-  display:block;
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:9px;
-}
+    .heading p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0;
+    }
 
-.stat strong{
-  display:block;
-  color:var(--navy);
-  font-size:27px;
-}
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 16px;
+      margin-bottom: 27px;
+    }
 
-.card{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
-  box-shadow:var(--shadow);
-}
+    .stat {
+      background: var(--white);
+      padding: 21px;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      box-shadow: var(--shadow);
+    }
 
-.card h3{
-  color:var(--navy);
-  font-size:17px;
-  margin:0 0 7px;
-}
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
 
-.muted{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
-}
+    .stat small {
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-.table-wrap{
-  overflow-x:auto;
-  margin-top:15px;
-}
+    .stat-icon {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      background: #f0efff;
+      color: var(--blue);
+      border-radius: 11px;
+      font-size: 17px;
+    }
 
-table{
-  width:100%;
-  min-width:950px;
-  border-collapse:collapse;
-}
+    .stat strong {
+      display: block;
+      color: var(--navy);
+      font-size: 30px;
+      letter-spacing: -.5px;
+    }
 
-th,td{
-  text-align:left;
-  padding:13px 11px;
-  border-bottom:1px solid var(--border);
-  font-size:13px;
-  vertical-align:top;
-}
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
 
-th{
-  color:#69758d;
-  background:#f8f9fc;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-tbody tr:hover{background:#f9faff}
+    .card h3 {
+      color: var(--navy);
+      font-size: 17px;
+      margin: 0 0 6px;
+    }
 
-.id{
-  color:var(--blue);
-  font-family:monospace;
-  font-size:12px;
-}
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
 
-.score{
-  color:var(--green);
-  font-weight:750;
-}
+    .refresh-label {
+      color: var(--green);
+      background: #edfaf5;
+      border-radius: 30px;
+      padding: 7px 11px;
+      font-size: 10px;
+      font-weight: 750;
+    }
 
-.flag{
-  display:inline-block;
-  background:#fff1dc;
-  color:var(--orange);
-  padding:5px 9px;
-  border-radius:7px;
-  font-size:11px;
-  line-height:1.4;
-  max-width:210px;
-}
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
 
-button{
-  border:0;
-  border-radius:9px;
-  padding:10px 15px;
-  background:var(--blue);
-  color:white;
-  font:inherit;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-}
+    table {
+      width: 100%;
+      min-width: 950px;
+      border-collapse: collapse;
+    }
 
-button:hover{filter:brightness(1.1)}
+    th,td {
+      text-align: left;
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      vertical-align: middle;
+    }
 
-.empty{
-  text-align:center;
-  padding:30px 15px;
-  color:var(--muted);
-  font-size:14px;
-}
+    th {
+      color: #777895;
+      background: #f8f8ff;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
 
-.error{
-  color:#c43d4b;
-  background:#ffe5e7;
-  padding:12px;
-  border-radius:9px;
-  font-size:13px;
-}
+    tbody tr:hover {
+      background: #fafaff;
+    }
 
-footer{
-  text-align:center;
-  padding:20px;
-  color:#8791a5;
-  font-size:12px;
-}
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
 
-@media(max-width:650px){
-  header{padding:14px 17px}
-  main{padding:19px 13px 35px}
-  .stats{grid-template-columns:1fr}
-  .stat{padding:15px}
-  .stat strong{font-size:23px}
-  .welcome{padding:21px}
-  .welcome h2{font-size:21px}
-  .card{padding:14px}
-}
-</style>
+    .id {
+      color: var(--blue);
+      font-family: monospace;
+      font-size: 11px;
+    }
+
+    .score {
+      color: var(--green);
+      font-weight: 750;
+    }
+
+    .flag {
+      display: inline-block;
+      background: #fff4e3;
+      color: var(--orange);
+      padding: 6px 9px;
+      border-radius: 8px;
+      font-size: 10px;
+      line-height: 1.5;
+      max-width: 210px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .error {
+      color: #b42332;
+      background: #fff0f1;
+      border: 1px solid #ffd8dc;
+      padding: 13px;
+      border-radius: 11px;
+      font-size: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 22px 15px;
+      color: #8989a4;
+      font-size: 11px;
+    }
+
+    @media(max-width:650px) {
+      header {
+        padding: 14px 17px;
+      }
+
+      main {
+        padding: 20px 13px 35px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 11px;
+      }
+
+      .stat {
+        padding: 17px;
+      }
+
+      .stat strong {
+        font-size: 25px;
+      }
+
+      .welcome {
+        padding: 25px 21px;
+        border-radius: 20px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .status {
+        font-size: 10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -279,44 +381,75 @@ footer{
     </div>
   </div>
 
-  <div class="status" id="connection">● Connecting...</div>
+  <div class="status" id="connection">
+    ● Connecting...
+  </div>
 </header>
 
 <main>
 
   <section class="welcome">
-    <h2>Welcome, Teacher</h2>
-    <p>
-      Monitor student quiz submissions, review scores and track
-      offline learning activity from one dashboard.
-    </p>
-  </section>
-
-  <section class="stats">
-    <div class="stat">
-      <small>Total Submissions</small>
-      <strong id="total">—</strong>
-    </div>
-
-    <div class="stat">
-      <small>Students Participated</small>
-      <strong id="students">—</strong>
-    </div>
-
-    <div class="stat">
-      <small>Current Lesson Version</small>
-      <strong id="version">—</strong>
+    <div class="welcome-content">
+      <div class="eyebrow">✦ EDUCATOR PORTAL</div>
+      <h2>Welcome, Teacher 👋</h2>
+      <p>
+        Track student quiz submissions, monitor learning activity
+        and review attempts received from students learning online
+        and offline.
+      </p>
     </div>
   </section>
 
   <section class="heading">
-    <h2>Student Submissions</h2>
-    <p>Quiz attempts received by the server.</p>
+    <h2>Dashboard overview</h2>
+    <p>A quick view of the submissions received by your platform.</p>
+  </section>
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-top">
+        <small>Total Submissions</small>
+        <div class="stat-icon">▤</div>
+      </div>
+      <strong id="total">—</strong>
+    </div>
+
+    <div class="stat">
+      <div class="stat-top">
+        <small>Students Participated</small>
+        <div class="stat-icon">♙</div>
+      </div>
+      <strong id="students">—</strong>
+    </div>
+
+    <div class="stat">
+      <div class="stat-top">
+        <small>Current Lesson Version</small>
+        <div class="stat-icon">◈</div>
+      </div>
+      <strong id="version">—</strong>
+    </div>
+
+  </section>
+
+  <section class="heading">
+    <h2>Student submissions</h2>
+    <p>Review quiz attempts received by the server.</p>
   </section>
 
   <section class="card">
-    <h3>Submission Records</h3>
-    <p class="muted" id="updated">Loading submission records...</p>
+
+    <div class="card-head">
+      <div>
+        <h3>Submission records</h3>
+        <p class="muted" id="updated">
+          Loading submission records...
+        </p>
+      </div>
+
+      <span class="refresh-label">● AUTO REFRESH · 3 SEC</span>
+    </div>
 
     <div class="table-wrap">
       <table>
@@ -330,23 +463,27 @@ footer{
             <th>Answers</th>
             <th>Score</th>
             <th>Received</th>
-            <th>Version Note</th>
+            <th>Version note</th>
           </tr>
         </thead>
 
         <tbody id="rows">
           <tr>
-            <td colspan="9" class="empty">Loading...</td>
+            <td colspan="9" class="empty">
+              Loading submissions...
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+
   </section>
 
 </main>
 
 <footer>
-  NEXUNO Learn · Learning Without Connectivity Barriers
+  <strong>NEXUNO Learn</strong><br>
+  Learning Without Connectivity Barriers.
 </footer>
 
 <script>
@@ -354,39 +491,42 @@ footer{
 
 const $ = id => document.getElementById(id);
 
-function safe(value){
+function safe(value) {
   return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   })[char]);
 }
 
-function formatDate(value){
-  if(!value) return "—";
+function formatDate(value) {
+  if (!value) return "—";
 
   const date = new Date(value);
 
-  if(Number.isNaN(date.getTime())) return "—";
+  if (Number.isNaN(date.getTime())) {
+    return "—";
+  }
 
   return date.toLocaleString();
 }
 
-async function loadDashboard(){
+async function loadDashboard() {
   const connection = $("connection");
 
-  try{
+  try {
     const response = await fetch("/api/teacher", {
-      cache:"no-store"
+      cache: "no-store"
     });
 
-    if(!response.ok){
+    if (!response.ok) {
       throw new Error("Unable to load teacher records.");
     }
 
     const data = await response.json();
+
     const attempts = Array.isArray(data.attempts)
       ? data.attempts
       : [];
@@ -397,70 +537,111 @@ async function loadDashboard(){
     $("total").textContent = attempts.length;
 
     const uniqueStudents = new Set(
-      attempts.map(a => a.student || "Student")
+      attempts.map(attempt =>
+        attempt.student || "Student"
+      )
     );
 
     $("students").textContent = uniqueStudents.size;
-    $("version").textContent = "v" + data.lessonVersion;
+
+    $("version").textContent =
+      data.lessonVersion != null
+        ? "v" + data.lessonVersion
+        : "—";
 
     $("updated").textContent =
       "Last updated: " + new Date().toLocaleTimeString();
 
-    const sorted = [...attempts].sort((a,b) =>
+    const sorted = [...attempts].sort((a, b) =>
       new Date(b.receivedAt || 0) -
       new Date(a.receivedAt || 0)
     );
 
-    if(sorted.length === 0){
-      $("rows").innerHTML =
-        '<tr><td colspan="9" class="empty">' +
-        'No submissions received yet.' +
-        '</td></tr>';
+    if (!sorted.length) {
+      $("rows").innerHTML = `
+        <tr>
+          <td colspan="9" class="empty">
+            No submissions received yet.
+          </td>
+        </tr>
+      `;
       return;
     }
 
-    $("rows").innerHTML = sorted.map((a,index) => {
-      const answerCount = a.answers
-        ? Object.keys(a.answers).length
+    $("rows").innerHTML = sorted.map((attempt, index) => {
+      const answers = attempt.answers &&
+        typeof attempt.answers === "object"
+        ? Object.keys(attempt.answers).length
         : 0;
 
-      const total = Number(a.total) || 0;
+      const totalQuestions =
+        Number.isFinite(Number(attempt.total)) &&
+        attempt.total !== null
+          ? Number(attempt.total)
+          : null;
 
-      const note = a.note
-        ? '<span class="flag">' + safe(a.note) + '</span>'
+      const score =
+        Number.isFinite(Number(attempt.score)) &&
+        attempt.score !== null
+          ? Number(attempt.score)
+          : null;
+
+      const answerLabel = totalQuestions !== null
+        ? `${answers} of ${totalQuestions}`
+        : `${answers} saved`;
+
+      const scoreLabel = score !== null && totalQuestions !== null
+        ? `<span class="score">${score}/${totalQuestions}</span>`
+        : "—";
+
+      const versionNote = attempt.note
+        ? `<span class="flag">${safe(attempt.note)}</span>`
         : "—";
 
       return `
         <tr>
           <td>${index + 1}</td>
-          <td>${safe(a.student || "Student")}</td>
-          <td>${safe(a.lessonTitle || a.lessonId)}</td>
-          <td><span class="id">${safe(
-            String(a.id || "").slice(0,8)
-          )}</span></td>
-          <td>v${safe(a.lessonVersion || 1)}</td>
-          <td>${answerCount} of ${total}</td>
-          <td><span class="score">${
-            Number(a.score) || 0
-          }/${total}</span></td>
-          <td>${safe(formatDate(a.receivedAt))}</td>
-          <td>${note}</td>
+
+          <td>${safe(attempt.student || "Student")}</td>
+
+          <td>${safe(
+            attempt.lessonTitle || attempt.lessonId || "—"
+          )}</td>
+
+          <td>
+            <span class="id">
+              ${safe(String(attempt.id || "").slice(0, 8))}
+            </span>
+          </td>
+
+          <td>
+            ${attempt.lessonVersion != null
+              ? "v" + safe(attempt.lessonVersion)
+              : "—"}
+          </td>
+
+          <td>${answerLabel}</td>
+
+          <td>${scoreLabel}</td>
+
+          <td>${safe(formatDate(attempt.receivedAt))}</td>
+
+          <td>${versionNote}</td>
         </tr>
       `;
     }).join("");
 
-  }catch(error){
+  } catch (error) {
     connection.textContent = "● Disconnected";
     connection.style.color = "#ffb5bb";
 
     $("updated").innerHTML =
-      '<span class="error">' +
-      safe(error.message) +
-      '</span>';
+      `<span class="error">${safe(error.message)}</span>`;
   }
 }
 
 loadDashboard();
+
 setInterval(loadDashboard, 3000);
 </script>
 
