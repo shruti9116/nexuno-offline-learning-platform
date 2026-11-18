@@ -38,4 +38,71 @@
   .hero h2{color:#fff;font-size:34px;margin:0;letter-spacing:.5px} .hero h2 span{color:#F26A10}
   .hero .tag{font-size:21px;font-weight:700;margin:6px 0 4px} .hero .sub{margin:0;color:#cfd6ff;font-size:15px}
   .levels{display:grid;gap:12px;margin-bottom:14px}
-  .level
+  .level{background:#fff;border-radius:14px;padding:16px 18px;border-left:6px solid var(--blue);box-shadow:0 2px 8px rgba(15,0,103,.08)}
+  .level:nth-child(2){border-left-color:var(--orange)} .level:nth-child(3){border-left-color:var(--ok)}
+  .level h3{margin:0 0 4px;font-size:19px;color:var(--navy)} .level .sm{margin:0 0 10px;color:#5d5f86;font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{padding:7px 14px;border-radius:99px;background:#eef1ff;color:var(--navy);font-weight:700;font-size:14px;border:2px solid transparent}
+  .chip.on{background:var(--navy);color:#fff} .chip.more{background:transparent;color:#5d5f86;border:2px dashed #c3c7e6;font-weight:400}
+</style>
+</head>
+<body>
+<header>
+  <h1>NEX<span>UNO</span> &nbsp;Learn</h1>
+  <span id="net" class="badge on">Online</span>
+  <div class="tools">
+    <label><input type="checkbox" id="simOffline"> Simulate offline</label>
+    <label><input type="checkbox" id="simDrop"> Interrupt next upload</label>
+  </div>
+</header>
+<main>
+  <nav>
+    <button id="t-lesson" class="act">Learn</button>
+    <button id="t-quiz">Quiz</button>
+    <button id="t-attempts">My submissions</button>
+  </nav>
+
+  <section id="v-lesson">
+    <div class="hero">
+      <h2>NEXUNO <span>Learn</span></h2>
+      <p class="tag">One platform for every learner</p>
+      <p class="sub">Download the lessons you need, learn with no network, and never lose a quiz answer.</p>
+    </div>
+    <div id="levels" class="levels"></div>
+    <div class="card">
+      <h2 id="pickTitle">Choose a level and subject</h2>
+      <p id="packState" class="muted">Pick a subject above to see its lessons. Only the lessons you download use data and storage.</p>
+      <div id="catalog"></div>
+    </div>
+    <div class="card">
+      <h2>On this device</h2>
+      <p class="muted">These lessons work with no network.</p>
+      <div id="downloads"></div>
+    </div>
+    <div class="card hide" id="lessonCard">
+      <div id="lessonBody"></div>
+      <button id="takeQuiz" class="alt" style="margin-top:8px">Take the quiz</button>
+    </div>
+  </section>
+
+  <section id="v-quiz" class="hide">
+    <div class="card">
+      <h2 id="quizTitle">Quiz</h2>
+      <p class="muted">Every answer is saved on this device the moment you pick it.</p>
+      <div id="quizForm"></div>
+      <p id="saveNote" class="muted"></p>
+      <button id="submit" class="alt">Submit quiz</button>
+    </div>
+  </section>
+
+  <section id="v-attempts" class="hide">
+    <div class="card">
+      <h2>My submissions</h2>
+      <table><thead><tr><th>Attempt</th><th>Status</th><th>Answers</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+      <p class="muted" id="attNote"></p>
+    </div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
