@@ -7,102 +7,165 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0F0067">
 <style>
-  :root{--navy:#0F0067;--blue:#002DFF;--orange:#F26A10;--ok:#12805c;--bad:#c0262d;--bg:#f4f5fb;--ink:#14143a}
+  /* System fonts on purpose: the app must look the same with no network. */
+  :root{
+    --ink:#0F0067; --paper:#F5F6FD; --blue:#002DFF; --ember:#F26A10; --leaf:#12805C;
+    --slate:#5A5D86; --line:#E1E4F5; --white:#fff; --bad:#C0262D;
+    --font:"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  header{background:var(--navy);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  header h1{margin:0;font-size:22px;letter-spacing:.3px}
-  header h1 span{color:var(--orange)}
-  .badge{padding:4px 12px;border-radius:99px;font-weight:700;font-size:14px}
-  .on{background:#d6f5e8;color:var(--ok)} .off{background:#ffe0e0;color:var(--bad)}
-  .tools{margin-left:auto;display:flex;gap:16px;font-size:14px;flex-wrap:wrap}
-  .tools label{display:flex;align-items:center;gap:6px;cursor:pointer}
-  main{max-width:760px;margin:0 auto;padding:16px}
-  .card{background:#fff;border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(15,0,103,.08)}
-  h2{margin:0 0 10px;font-size:20px;color:var(--navy)}
-  button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;background:var(--blue);color:#fff}
-  button.alt{background:var(--orange)} button.ghost{background:#e7e9fb;color:var(--navy)} button:disabled{opacity:.5;cursor:default}
-  button:hover{filter:brightness(1.12)} .opt:hover{border-color:#8da2ff} .row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #e6e8f5} .row:last-child{border:0} .row .meta{flex:1} .row .meta b{display:block;font-size:17px} .tick{color:var(--ok);font-weight:700}
-  .q{margin:14px 0} .q p{font-weight:700;margin:0 0 6px}
-  .opt{display:block;padding:10px 12px;border:2px solid #dcdff3;border-radius:10px;margin:6px 0;cursor:pointer}
-  .opt.sel{border-color:var(--blue);background:#eef1ff}
-  .opt input{margin-right:8px}
-  table{width:100%;border-collapse:collapse} td,th{padding:8px 6px;text-align:left;border-bottom:1px solid #e6e8f5;font-size:15px}
-  .st{padding:3px 10px;border-radius:99px;font-weight:700;font-size:13px;white-space:nowrap}
-  .s-saved{background:#e7e9fb;color:var(--navy)} .s-pending{background:#fff0d9;color:#a05a00}
-  .s-syncing{background:#dbe5ff;color:var(--blue)} .s-synced{background:#d6f5e8;color:var(--ok)} .s-failed{background:#ffe0e0;color:var(--bad)}
-  .muted{color:#5d5f86;font-size:14px}
-  nav{display:flex;gap:8px;margin-bottom:12px} nav button{background:#e7e9fb;color:var(--navy)} nav button.act{background:var(--navy);color:#fff}
-  .hide{display:none}
-  .hero{background:linear-gradient(135deg,#0F0067,#1a1fa8 70%,#002DFF);color:#fff;border-radius:18px;padding:26px 22px;margin-bottom:14px}
-  .hero h2{color:#fff;font-size:34px;margin:0;letter-spacing:.5px} .hero h2 span{color:#F26A10}
-  .hero .tag{font-size:21px;font-weight:700;margin:6px 0 4px} .hero .sub{margin:0;color:#cfd6ff;font-size:15px}
-  .levels{display:grid;gap:12px;margin-bottom:14px}
-  .level{background:#fff;border-radius:14px;padding:16px 18px;border-left:6px solid var(--blue);box-shadow:0 2px 8px rgba(15,0,103,.08)}
-  .level:nth-child(2){border-left-color:var(--orange)} .level:nth-child(3){border-left-color:var(--ok)}
-  .level h3{margin:0 0 4px;font-size:19px;color:var(--navy)} .level .sm{margin:0 0 10px;color:#5d5f86;font-size:14px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{padding:7px 14px;border-radius:99px;background:#eef1ff;color:var(--navy);font-weight:700;font-size:14px;border:2px solid transparent}
-  .chip.on{background:var(--navy);color:#fff} .chip.more{background:transparent;color:#5d5f86;border:2px dashed #c3c7e6;font-weight:400}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.45}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+  .hide{display:none!important}
+  .muted{color:var(--slate);font-size:14px;margin:0 0 10px}
+
+  /* ---------- top: wordmark, hero ---------- */
+  .top{background:var(--ink);color:#fff;padding:18px 20px 26px}
+  .wrap{max-width:760px;margin:0 auto}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .word{font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .word span{font-weight:300;opacity:.85;margin-left:6px}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12)}
+  .pill i{width:9px;height:9px;border-radius:50%;background:#5be0a8}
+  .pill.off i{background:var(--ember)}
+  .hero{padding-top:30px}
+  h1{margin:0;font-size:clamp(34px,9vw,52px);line-height:1.02;font-weight:800;letter-spacing:-.03em;max-width:12ch}
+  .hero p{margin:14px 0 0;color:#cdd3ff;font-size:17px;max-width:46ch}
+  .signal{display:flex;align-items:flex-end;gap:14px;margin-top:22px;color:#e8ebff;font-size:15px}
+  .meter{display:flex;align-items:flex-end;gap:4px;height:26px;flex:none}
+  .meter s{display:block;width:7px;border-radius:2px;background:rgba(255,255,255,.22);transform-origin:bottom;animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+  .meter s:nth-child(1){height:7px} .meter s:nth-child(2){height:13px;animation-delay:.08s}
+  .meter s:nth-child(3){height:19px;animation-delay:.16s} .meter s:nth-child(4){height:26px;animation-delay:.24s}
+  .meter.on s{background:#5be0a8} .meter.off s:nth-child(1){background:var(--ember)}
+  @keyframes rise{from{transform:scaleY(.1);opacity:0}to{transform:none;opacity:1}}
+  @media (prefers-reduced-motion:reduce){.meter s{animation:none}}
+  details.demo{margin-top:20px;font-size:14px;color:#cdd3ff}
+  details.demo summary{cursor:pointer;display:inline-block;padding:6px 0;font-weight:600}
+  details.demo .opts{display:flex;gap:20px;flex-wrap:wrap;padding:8px 0 0}
+  details.demo label{display:flex;align-items:center;gap:8px;cursor:pointer}
+
+  /* ---------- content ---------- */
+  main{max-width:760px;margin:0 auto;padding:20px 20px 110px}
+  h2{margin:0 0 6px;font-size:22px;letter-spacing:-.01em}
+  .panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px}
+  .btn{border:0;border-radius:12px;padding:12px 20px;min-height:44px;font-weight:700;background:var(--blue);color:#fff}
+  .btn.go{background:var(--ember)} .btn.soft{background:#E9ECFF;color:var(--ink)}
+  .btn:hover{filter:brightness(1.1)} .btn:disabled{opacity:.5;cursor:default}
+
+  /* level shelves: each has its own colour and scale */
+  .levels{display:grid;gap:14px;margin:6px 0 18px}
+  .shelf{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px 20px 20px;border-top:6px solid var(--c)}
+  .shelf h3{margin:0 0 12px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--c)}
+  .shelf h3 small{display:block;font-size:14px;font-weight:600;letter-spacing:0;color:var(--slate);margin-bottom:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{min-height:44px;padding:0 18px;border-radius:99px;border:2px solid var(--line);background:#fff;color:var(--ink);font-weight:700;font-size:15px}
+  .chip:hover{border-color:var(--c)}
+  .chip.on{background:var(--c);border-color:var(--c);color:#fff}
+  .chip.more{border-style:dashed;color:var(--slate);font-weight:500;display:inline-flex;align-items:center}
+
+  /* lesson rows */
+  .row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .meta{flex:1;min-width:0} .row .meta b{display:block;font-size:17px}
+  .row .meta span{color:var(--slate);font-size:14px}
+  .tick{color:var(--leaf);font-weight:700;font-size:14px}
+  .reading p{font-size:17px;line-height:1.65;max-width:62ch;margin:0 0 12px}
+
+  /* quiz */
+  .prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 4px}
+  #qprog{height:100%;width:0;background:var(--ember);border-radius:99px;transition:width .3s}
+  .q{margin:22px 0} .q p{font-weight:700;font-size:18px;margin:0 0 8px}
+  .opt{display:flex;align-items:center;gap:12px;padding:14px 16px;min-height:52px;border:2px solid var(--line);border-radius:14px;margin:8px 0;cursor:pointer;background:#fff}
+  .opt:hover{border-color:#9aa8ff}
+  .opt.sel{border-color:var(--blue);background:#EEF1FF}
+  .opt input{width:20px;height:20px;accent-color:var(--blue);margin:0}
+
+  /* submissions */
+  table{width:100%;border-collapse:collapse} th{color:var(--slate);font-size:13px;font-weight:600}
+  td,th{padding:12px 6px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:middle}
+  .st{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:13px;white-space:nowrap}
+  .st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+  .s-saved{background:#E9ECFF;color:var(--ink)} .s-pending{background:#FFF0D9;color:#A05A00}
+  .s-syncing{background:#DCE5FF;color:var(--blue)} .s-synced{background:#D6F5E8;color:var(--leaf)} .s-failed{background:#FFE0E0;color:var(--bad)}
+
+  /* bottom navigation */
+  nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);z-index:20;padding-bottom:env(safe-area-inset-bottom)}
+  nav button{background:none;border:0;border-top:4px solid transparent;padding:14px 4px 16px;font-weight:700;font-size:15px;color:var(--slate)}
+  nav button.act{color:var(--ink);border-top-color:var(--ember)}
 </style>
 </head>
 <body>
-<header>
-  <h1>NEX<span>UNO</span> &nbsp;Learn</h1>
-  <span id="net" class="badge on">Online</span>
-  <div class="tools">
-    <label><input type="checkbox" id="simOffline"> Simulate offline</label>
-    <label><input type="checkbox" id="simDrop"> Interrupt next upload</label>
-  </div>
-</header>
-<main>
-  <nav>
-    <button id="t-lesson" class="act">Learn</button>
-    <button id="t-quiz">Quiz</button>
-    <button id="t-attempts">My submissions</button>
-  </nav>
-
-  <section id="v-lesson">
-    <div class="hero">
-      <h2>NEXUNO <span>Learn</span></h2>
-      <p class="tag">One platform for every learner</p>
-      <p class="sub">Download the lessons you need, learn with no network, and never lose a quiz answer.</p>
+<div class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="word">nexuno<span>learn</span></div>
+      <span id="net" class="pill on"><i></i><b id="netText">Online</b></span>
     </div>
+    <div class="hero">
+      <h1>One platform for every learner</h1>
+      <p>Download the lessons you need. Learn with no network. Your quiz answers are never lost.</p>
+      <div class="signal">
+        <div id="meter" class="meter on"><s></s><s></s><s></s><s></s></div>
+        <span id="netNote">Connected. Everything you download also works offline.</span>
+      </div>
+      <details class="demo">
+        <summary>Demo controls</summary>
+        <div class="opts">
+          <label><input type="checkbox" id="simOffline"> Simulate offline</label>
+          <label><input type="checkbox" id="simDrop"> Interrupt next upload</label>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section id="v-lesson">
     <div id="levels" class="levels"></div>
-    <div class="card">
+    <div class="panel">
       <h2 id="pickTitle">Choose a level and subject</h2>
       <p id="packState" class="muted">Pick a subject above to see its lessons. Only the lessons you download use data and storage.</p>
       <div id="catalog"></div>
     </div>
-    <div class="card">
+    <div class="panel">
       <h2>On this device</h2>
       <p class="muted">These lessons work with no network.</p>
       <div id="downloads"></div>
     </div>
-    <div class="card hide" id="lessonCard">
+    <div class="panel reading hide" id="lessonCard">
       <div id="lessonBody"></div>
-      <button id="takeQuiz" class="alt" style="margin-top:8px">Take the quiz</button>
+      <button id="takeQuiz" class="btn go">Take the quiz</button>
     </div>
   </section>
 
   <section id="v-quiz" class="hide">
-    <div class="card">
+    <div class="panel">
       <h2 id="quizTitle">Quiz</h2>
       <p class="muted">Every answer is saved on this device the moment you pick it.</p>
+      <div class="prog"><div id="qprog"></div></div>
+      <p id="qcount" class="muted"></p>
       <div id="quizForm"></div>
       <p id="saveNote" class="muted"></p>
-      <button id="submit" class="alt">Submit quiz</button>
+      <button id="submit" class="btn go">Submit quiz</button>
     </div>
   </section>
 
   <section id="v-attempts" class="hide">
-    <div class="card">
+    <div class="panel">
       <h2>My submissions</h2>
       <table><thead><tr><th>Attempt</th><th>Status</th><th>Answers</th><th></th></tr></thead><tbody id="rows"></tbody></table>
-      <p class="muted" id="attNote"></p>
+      <p class="muted" id="attNote" style="margin-top:12px"></p>
     </div>
   </section>
 </main>
+
+<nav>
+  <button id="t-lesson" class="act">Learn</button>
+  <button id="t-quiz">Quiz</button>
+  <button id="t-attempts">Submissions</button>
+</nav>
 <script src="app.js"></script>
 </body>
 </html>
