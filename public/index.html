@@ -1,171 +1,771 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nexuno Learn</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0F0067">
-<style>
-  /* System fonts on purpose: the app must look the same with no network. */
-  :root{
-    --ink:#0F0067; --paper:#F5F6FD; --blue:#002DFF; --ember:#F26A10; --leaf:#12805C;
-    --slate:#5A5D86; --line:#E1E4F5; --white:#fff; --bad:#C0262D;
-    --font:"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.45}
-  button{font:inherit;cursor:pointer}
-  :focus-visible{outline:3px solid var(--ember);outline-offset:2px}
-  .hide{display:none!important}
-  .muted{color:var(--slate);font-size:14px;margin:0 0 10px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101044">
+  <meta name="description" content="NEXUNO Learn — Learning Without Connectivity Barriers.">
+  <link rel="manifest" href="manifest.json">
+  <title>NEXUNO Learn | Learning Without Connectivity Barriers</title>
 
-  /* ---------- top: wordmark, hero ---------- */
-  .top{background:var(--ink);color:#fff;padding:18px 20px 26px}
-  .wrap{max-width:760px;margin:0 auto}
-  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .word{font-size:22px;font-weight:800;letter-spacing:-.02em}
-  .word span{font-weight:300;opacity:.85;margin-left:6px}
-  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12)}
-  .pill i{width:9px;height:9px;border-radius:50%;background:#5be0a8}
-  .pill.off i{background:var(--ember)}
-  .hero{padding-top:30px}
-  h1{margin:0;font-size:clamp(34px,9vw,52px);line-height:1.02;font-weight:800;letter-spacing:-.03em;max-width:12ch}
-  .hero p{margin:14px 0 0;color:#cdd3ff;font-size:17px;max-width:46ch}
-  .signal{display:flex;align-items:flex-end;gap:14px;margin-top:22px;color:#e8ebff;font-size:15px}
-  .meter{display:flex;align-items:flex-end;gap:4px;height:26px;flex:none}
-  .meter s{display:block;width:7px;border-radius:2px;background:rgba(255,255,255,.22);transform-origin:bottom;animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
-  .meter s:nth-child(1){height:7px} .meter s:nth-child(2){height:13px;animation-delay:.08s}
-  .meter s:nth-child(3){height:19px;animation-delay:.16s} .meter s:nth-child(4){height:26px;animation-delay:.24s}
-  .meter.on s{background:#5be0a8} .meter.off s:nth-child(1){background:var(--ember)}
-  @keyframes rise{from{transform:scaleY(.1);opacity:0}to{transform:none;opacity:1}}
-  @media (prefers-reduced-motion:reduce){.meter s{animation:none}}
-  details.demo{margin-top:20px;font-size:14px;color:#cdd3ff}
-  details.demo summary{cursor:pointer;display:inline-block;padding:6px 0;font-weight:600}
-  details.demo .opts{display:flex;gap:20px;flex-wrap:wrap;padding:8px 0 0}
-  details.demo label{display:flex;align-items:center;gap:8px;cursor:pointer}
+  <style>
+    :root {
+      --navy: #101044;
+      --navy2: #19185e;
+      --blue: #493bff;
+      --blue2: #7167ff;
+      --purple: #8c63ff;
+      --paper: #f5f6ff;
+      --white: #ffffff;
+      --ink: #171735;
+      --muted: #777895;
+      --line: #e9e9f5;
+      --green: #15966a;
+      --orange: #f18b43;
+      --shadow: 0 12px 35px rgba(30, 29, 90, .08);
+      --radius: 22px;
+    }
 
-  /* ---------- content ---------- */
-  main{max-width:760px;margin:0 auto;padding:20px 20px 110px}
-  h2{margin:0 0 6px;font-size:22px;letter-spacing:-.01em}
-  .panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px}
-  .btn{border:0;border-radius:12px;padding:12px 20px;min-height:44px;font-weight:700;background:var(--blue);color:#fff}
-  .btn.go{background:var(--ember)} .btn.soft{background:#E9ECFF;color:var(--ink)}
-  .btn:hover{filter:brightness(1.1)} .btn:disabled{opacity:.5;cursor:default}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* level shelves: each has its own colour and scale */
-  .levels{display:grid;gap:14px;margin:6px 0 18px}
-  .shelf{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px 20px 20px;border-top:6px solid var(--c)}
-  .shelf h3{margin:0 0 12px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--c)}
-  .shelf h3 small{display:block;font-size:14px;font-weight:600;letter-spacing:0;color:var(--slate);margin-bottom:4px}
-  .chips{display:flex;flex-wrap:wrap;gap:10px}
-  .chip{min-height:44px;padding:0 18px;border-radius:99px;border:2px solid var(--line);background:#fff;color:var(--ink);font-weight:700;font-size:15px}
-  .chip:hover{border-color:var(--c)}
-  .chip.on{background:var(--c);border-color:var(--c);color:#fff}
-  .chip.more{border-style:dashed;color:var(--slate);font-weight:500;display:inline-flex;align-items:center}
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      padding-bottom: 100px;
+    }
 
-  /* lesson rows */
-  .row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
-  .row:last-child{border-bottom:0;padding-bottom:0}
-  .row .meta{flex:1;min-width:0} .row .meta b{display:block;font-size:17px}
-  .row .meta span{color:var(--slate);font-size:14px}
-  .tick{color:var(--leaf);font-weight:700;font-size:14px}
-  .reading p{font-size:17px;line-height:1.65;max-width:62ch;margin:0 0 12px}
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
 
-  /* quiz */
-  .prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 4px}
-  #qprog{height:100%;width:0;background:var(--ember);border-radius:99px;transition:width .3s}
-  .q{margin:22px 0} .q p{font-weight:700;font-size:18px;margin:0 0 8px}
-  .opt{display:flex;align-items:center;gap:12px;padding:14px 16px;min-height:52px;border:2px solid var(--line);border-radius:14px;margin:8px 0;cursor:pointer;background:#fff}
-  .opt:hover{border-color:#9aa8ff}
-  .opt.sel{border-color:var(--blue);background:#EEF1FF}
-  .opt input{width:20px;height:20px;accent-color:var(--blue);margin:0}
+    .top {
+      background: var(--navy);
+      color: white;
+      padding: 17px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 5px 20px rgba(16, 16, 68, .16);
+    }
 
-  /* submissions */
-  table{width:100%;border-collapse:collapse} th{color:var(--slate);font-size:13px;font-weight:600}
-  td,th{padding:12px 6px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:middle}
-  .st{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:13px;white-space:nowrap}
-  .st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-  .s-saved{background:#E9ECFF;color:var(--ink)} .s-pending{background:#FFF0D9;color:#A05A00}
-  .s-syncing{background:#DCE5FF;color:var(--blue)} .s-synced{background:#D6F5E8;color:var(--leaf)} .s-failed{background:#FFE0E0;color:var(--bad)}
+    .word {
+      font-size: 25px;
+      font-weight: 850;
+      letter-spacing: -1px;
+    }
 
-  /* bottom navigation */
-  nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);z-index:20;padding-bottom:env(safe-area-inset-bottom)}
-  nav button{background:none;border:0;border-top:4px solid transparent;padding:14px 4px 16px;font-weight:700;font-size:15px;color:var(--slate)}
-  nav button.act{color:var(--ink);border-top-color:var(--ember)}
-</style>
+    .word span {
+      color: #9e91ff;
+    }
+
+    .brandline {
+      font-size: 10px;
+      color: #c4c2ec;
+      letter-spacing: 1.5px;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 30px;
+      padding: 9px 13px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #e5e4ff;
+      background: rgba(255,255,255,.08);
+    }
+
+    .wrap {
+      max-width: 1120px;
+      width: 92%;
+      margin: 28px auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: 42px;
+      color: white;
+      background: linear-gradient(120deg, #17165c, #3430b9 60%, #7055ed);
+      box-shadow: 0 18px 45px rgba(56, 48, 175, .19);
+    }
+
+    .hero:before,
+    .hero:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      pointer-events: none;
+    }
+
+    .hero:before {
+      width: 260px;
+      height: 260px;
+      right: -65px;
+      top: -110px;
+    }
+
+    .hero:after {
+      width: 180px;
+      height: 180px;
+      right: 150px;
+      bottom: -130px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 30px;
+      background: rgba(255,255,255,.1);
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 19px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: #c6baff;
+    }
+
+    .hero p {
+      color: #e0dfff;
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 550px;
+    }
+
+    .signal {
+      margin-top: 26px;
+      max-width: 340px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 15px;
+      padding: 13px 15px;
+    }
+
+    .signal-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 9px;
+      color: #efedff;
+    }
+
+    .meter {
+      height: 7px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.2);
+      overflow: hidden;
+    }
+
+    .meter > div {
+      height: 100%;
+      width: 100%;
+      background: #8ce5c2;
+      border-radius: inherit;
+    }
+
+    #netNote {
+      font-size: 11px;
+      color: #d6d3ff;
+      margin-top: 8px;
+    }
+
+    .demo {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 14px 18px;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .demo summary {
+      color: var(--navy);
+      font-weight: 750;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .demo-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .demo-controls label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 35px 0 18px;
+    }
+
+    .section-heading h2 {
+      font-size: 22px;
+      color: var(--navy);
+      letter-spacing: -.5px;
+    }
+
+    .section-heading p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    #levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 15px;
+    }
+
+    .shelf {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      padding: 18px;
+      box-shadow: 0 6px 22px rgba(30,29,90,.04);
+      min-width: 0;
+    }
+
+    .shelf h3 {
+      color: var(--navy);
+      font-size: 16px;
+      margin-bottom: 13px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: #f8f8ff;
+      color: var(--ink);
+      border-radius: 30px;
+      padding: 9px 13px;
+      font-size: 12px;
+      transition: .2s;
+    }
+
+    .chip:hover,
+    .chip.active,
+    .chip.selected {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    #pickTitle {
+      color: var(--navy);
+      font-size: 18px;
+      margin-bottom: 13px;
+    }
+
+    #packState {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 10px 0;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+
+    .row:last-child {
+      border-bottom: 0;
+    }
+
+    .row h3,
+    .row h4 {
+      color: var(--navy);
+      font-size: 14px;
+    }
+
+    .meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 17px;
+      background: #efefff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 750;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn.go {
+      background: var(--blue);
+      color: white;
+      box-shadow: 0 5px 13px rgba(73,59,255,.2);
+    }
+
+    .btn.soft {
+      background: #edfaf5;
+      color: var(--green);
+    }
+
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .tick {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .reading {
+      line-height: 1.85;
+      color: #484866;
+      font-size: 14px;
+    }
+
+    .reading h2,
+    .reading h3 {
+      color: var(--navy);
+      margin: 15px 0 8px;
+    }
+
+    .reading p {
+      margin-bottom: 12px;
+    }
+
+    .prog {
+      height: 7px;
+      background: #ececff;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .prog > div {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      border-radius: inherit;
+    }
+
+    .q {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .q:last-child {
+      border-bottom: 0;
+    }
+
+    .q h3 {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 13px;
+      margin: 8px 0;
+      border: 1px solid var(--line);
+      background: #fafaff;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #454560;
+    }
+
+    .opt:has(input:checked) {
+      border-color: var(--blue);
+      background: #f0efff;
+    }
+
+    .st {
+      display: inline-block;
+      border-radius: 30px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 750;
+      background: #f0efff;
+      color: var(--blue);
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    #v-quiz .panel,
+    #v-attempts .panel {
+      overflow-x: auto;
+    }
+
+    #rows {
+      min-width: 0;
+    }
+
+    #rows table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    #rows th,
+    #rows td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    #rows th {
+      color: var(--navy);
+      background: #f7f7ff;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 15px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.96);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(15px);
+    }
+
+    .bottom-nav button {
+      flex: 1;
+      max-width: 180px;
+      border: 0;
+      border-radius: 13px;
+      background: transparent;
+      color: var(--muted);
+      padding: 11px 8px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .bottom-nav button.active,
+    .bottom-nav button:focus {
+      background: #efefff;
+      color: var(--blue);
+    }
+
+    .bottom-nav button span {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 3px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 650px) {
+      .top {
+        padding: 14px 5%;
+      }
+
+      .word {
+        font-size: 22px;
+      }
+
+      .wrap {
+        width: 92%;
+        margin-top: 18px;
+      }
+
+      .hero {
+        padding: 28px 23px;
+        border-radius: 23px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 13px;
+      }
+
+      .section-heading {
+        margin-top: 27px;
+      }
+
+      .section-heading h2 {
+        font-size: 19px;
+      }
+
+      .panel {
+        padding: 17px;
+        border-radius: 18px;
+      }
+
+      #levels {
+        grid-template-columns: 1fr;
+      }
+
+      .row {
+        align-items: flex-start;
+      }
+
+      .row .btn {
+        width: 100%;
+      }
+
+      .pill {
+        font-size: 10px;
+        padding: 8px 10px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="top">
+
+  <header class="top">
+    <div>
+      <div class="word">nexuno<span>learn.</span></div>
+      <div class="brandline">Learning without connectivity barriers</div>
+    </div>
+
+    <div class="pill">
+      <span id="net">●</span>
+      <span id="netText">Checking connection...</span>
+    </div>
+  </header>
+
   <div class="wrap">
-    <div class="bar">
-      <div class="word">nexuno<span>learn</span></div>
-      <span id="net" class="pill on"><i></i><b id="netText">Online</b></span>
-    </div>
-    <div class="hero">
-      <h1>One platform for every learner</h1>
-      <p>Download the lessons you need. Learn with no network. Your quiz answers are never lost.</p>
-      <div class="signal">
-        <div id="meter" class="meter on"><s></s><s></s><s></s><s></s></div>
-        <span id="netNote">Connected. Everything you download also works offline.</span>
-      </div>
-      <details class="demo">
-        <summary>Demo controls</summary>
-        <div class="opts">
-          <label><input type="checkbox" id="simOffline"> Simulate offline</label>
-          <label><input type="checkbox" id="simDrop"> Interrupt next upload</label>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">✦ Learn anywhere. Learn anytime.</div>
+        <h1>Education that goes <span>beyond connectivity.</span></h1>
+        <p>
+          Download your lessons, learn without internet, complete quizzes
+          offline and sync your progress when you're connected again.
+        </p>
+
+        <div class="signal">
+          <div class="signal-top">
+            <span>Connection status</span>
+            <span id="netNote">Ready to learn</span>
+          </div>
+          <div class="meter" id="meter">
+            <div></div>
+          </div>
         </div>
-      </details>
+      </div>
+    </section>
+
+    <details class="demo">
+      <summary>⚙ Demo controls</summary>
+      <div class="demo-controls">
+        <label>
+          <input type="checkbox" id="simOffline">
+          Simulate offline mode
+        </label>
+        <label>
+          <input type="checkbox" id="simDrop">
+          Simulate interrupted upload
+        </label>
+      </div>
+    </details>
+
+    <section id="v-lesson">
+
+      <div class="section-heading">
+        <div>
+          <h2>Explore learning</h2>
+          <p>Choose your education level and discover lessons.</p>
+        </div>
+      </div>
+
+      <div id="levels"></div>
+
+      <div class="panel" style="margin-top:18px">
+        <h3 id="pickTitle">Choose a subject</h3>
+        <p id="packState">Select your learning category to continue.</p>
+        <div id="catalog"></div>
+      </div>
+
+      <div class="section-heading">
+        <div>
+          <h2>My offline library</h2>
+          <p>Your downloaded lessons, ready to access offline.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div id="downloads">
+          <p class="meta">Your downloaded lessons will appear here.</p>
+        </div>
+      </div>
+
+      <div id="lessonCard" class="panel hide">
+        <div class="section-heading" style="margin-top:0">
+          <div>
+            <h2>Lesson overview</h2>
+            <p>Study at your own pace.</p>
+          </div>
+          <span class="st">Learning material</span>
+        </div>
+
+        <div id="lessonBody" class="reading"></div>
+
+        <button id="takeQuiz" class="btn go" style="margin-top:20px">
+          Take quiz →
+        </button>
+      </div>
+
+    </section>
+
+    <section id="v-quiz" class="hide">
+      <div class="section-heading">
+        <div>
+          <h2>Knowledge check</h2>
+          <p>Test what you have learned.</p>
+        </div>
+        <span class="st">Offline supported</span>
+      </div>
+
+      <div class="panel">
+        <h2 id="quizTitle" style="font-size:20px;color:var(--navy)">
+          Quiz
+        </h2>
+
+        <div class="prog" id="qprog">
+          <div></div>
+        </div>
+
+        <p id="qcount" class="meta">Answer the questions below.</p>
+
+        <form id="quizForm">
+          <div id="quizQuestions"></div>
+
+          <p id="saveNote" class="meta" style="margin:15px 0">
+            Your progress is saved on this device.
+          </p>
+
+          <button id="submit" type="submit" class="btn go">
+            Submit answers →
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="v-attempts" class="hide">
+      <div class="section-heading">
+        <div>
+          <h2>My submissions</h2>
+          <p>Track your quiz attempts and sync status.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div id="rows"></div>
+        <p id="attNote" class="meta" style="margin-top:14px">
+          Your submission history will appear here.
+        </p>
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>NEXUNO Learn</strong><br>
+      Learning Without Connectivity Barriers.
     </div>
+
   </div>
-</div>
 
-<main>
-  <section id="v-lesson">
-    <div id="levels" class="levels"></div>
-    <div class="panel">
-      <h2 id="pickTitle">Choose a level and subject</h2>
-      <p id="packState" class="muted">Pick a subject above to see its lessons. Only the lessons you download use data and storage.</p>
-      <div id="catalog"></div>
-    </div>
-    <div class="panel">
-      <h2>On this device</h2>
-      <p class="muted">These lessons work with no network.</p>
-      <div id="downloads"></div>
-    </div>
-    <div class="panel reading hide" id="lessonCard">
-      <div id="lessonBody"></div>
-      <button id="takeQuiz" class="btn go">Take the quiz</button>
-    </div>
-  </section>
+  <nav class="bottom-nav">
+    <button id="t-lesson" class="active" type="button">
+      <span>⌂</span>
+      Learn
+    </button>
 
-  <section id="v-quiz" class="hide">
-    <div class="panel">
-      <h2 id="quizTitle">Quiz</h2>
-      <p class="muted">Every answer is saved on this device the moment you pick it.</p>
-      <div class="prog"><div id="qprog"></div></div>
-      <p id="qcount" class="muted"></p>
-      <div id="quizForm"></div>
-      <p id="saveNote" class="muted"></p>
-      <button id="submit" class="btn go">Submit quiz</button>
-    </div>
-  </section>
+    <button id="t-quiz" type="button">
+      <span>✎</span>
+      Quiz
+    </button>
 
-  <section id="v-attempts" class="hide">
-    <div class="panel">
-      <h2>My submissions</h2>
-      <table><thead><tr><th>Attempt</th><th>Status</th><th>Answers</th><th></th></tr></thead><tbody id="rows"></tbody></table>
-      <p class="muted" id="attNote" style="margin-top:12px"></p>
-    </div>
-  </section>
-</main>
+    <button id="t-attempts" type="button">
+      <span>▤</span>
+      Submissions
+    </button>
+  </nav>
 
-<nav>
-  <button id="t-lesson" class="act">Learn</button>
-  <button id="t-quiz">Quiz</button>
-  <button id="t-attempts">Submissions</button>
-</nav>
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
