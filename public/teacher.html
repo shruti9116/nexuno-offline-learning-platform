@@ -10,362 +10,311 @@
 
   <style>
     :root {
-      --navy: #101044;
-      --blue: #493bff;
-      --purple: #7965ff;
-      --bg: #f5f6ff;
-      --white: #fff;
-      --ink: #191936;
-      --muted: #777895;
-      --border: #e8e8f5;
-      --green: #16845d;
-      --orange: #a05a00;
-      --shadow: 0 12px 35px rgba(30,29,90,.07);
+      --navy:#101044;
+      --blue:#493bff;
+      --purple:#7965ff;
+      --bg:#f5f6ff;
+      --white:#fff;
+      --ink:#191936;
+      --muted:#777895;
+      --border:#e8e8f5;
+      --green:#16845d;
+      --orange:#a05a00;
+      --shadow:0 12px 35px rgba(30,29,90,.07);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing:border-box; }
 
     body {
-      margin: 0;
-      font-family: Inter, "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
+      margin:0;
+      font-family:Inter,"Segoe UI",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
     }
 
     header {
-      background: var(--navy);
-      color: white;
-      padding: 17px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      box-shadow: 0 5px 20px rgba(16,16,68,.15);
+      background:var(--navy);
+      color:white;
+      padding:17px 5%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+      box-shadow:0 5px 20px rgba(16,16,68,.15);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .brand { display:flex; align-items:center; gap:12px; }
 
     .logo {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      background: linear-gradient(135deg,var(--blue),var(--purple));
-      font-size: 21px;
-      font-weight: 850;
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:linear-gradient(135deg,var(--blue),var(--purple));
+      font-size:21px;
+      font-weight:850;
     }
 
-    header h1 {
-      font-size: 21px;
-      margin: 0;
-      letter-spacing: -.5px;
-    }
-
-    header h1 span {
-      color: #a99eff;
-    }
+    header h1 { font-size:21px; margin:0; letter-spacing:-.5px; }
+    header h1 span { color:#a99eff; }
 
     header small {
-      display: block;
-      color: #c4c2ec;
-      font-size: 10px;
-      margin-top: 4px;
-      letter-spacing: 1.5px;
+      display:block;
+      color:#c4c2ec;
+      font-size:10px;
+      margin-top:4px;
+      letter-spacing:1.5px;
     }
 
     .status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 13px;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 30px;
-      background: rgba(255,255,255,.08);
-      font-size: 12px;
-      color: #d9f7e9;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 13px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:30px;
+      background:rgba(255,255,255,.08);
+      font-size:12px;
+      color:#d9f7e9;
     }
 
-    main {
-      max-width: 1150px;
-      margin: auto;
-      padding: 30px 20px 45px;
-    }
+    main { max-width:1150px; margin:auto; padding:30px 20px 45px; }
 
     .welcome {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(120deg,#17165c,#3730b9 65%,#7055ed);
-      color: white;
-      padding: 34px;
-      border-radius: 24px;
-      margin-bottom: 25px;
-      box-shadow: 0 16px 40px rgba(56,48,175,.16);
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(120deg,#17165c,#3730b9 65%,#7055ed);
+      color:white;
+      padding:34px;
+      border-radius:24px;
+      margin-bottom:25px;
+      box-shadow:0 16px 40px rgba(56,48,175,.16);
     }
 
     .welcome:after {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      right: -55px;
-      top: -105px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.08);
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      right:-55px;
+      top:-105px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
     }
 
-    .welcome-content {
-      position: relative;
-      z-index: 1;
-    }
+    .welcome-content { position:relative; z-index:1; }
 
     .eyebrow {
-      display: inline-block;
-      border: 1px solid rgba(255,255,255,.25);
-      background: rgba(255,255,255,.1);
-      padding: 7px 12px;
-      border-radius: 30px;
-      font-size: 10px;
-      letter-spacing: 1.2px;
-      margin-bottom: 15px;
+      display:inline-block;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.1);
+      padding:7px 12px;
+      border-radius:30px;
+      font-size:10px;
+      letter-spacing:1.2px;
+      margin-bottom:15px;
     }
 
     .welcome h2 {
-      margin: 0 0 10px;
-      font-size: clamp(25px,4vw,36px);
-      letter-spacing: -.8px;
+      margin:0 0 10px;
+      font-size:clamp(25px,4vw,36px);
+      letter-spacing:-.8px;
     }
 
     .welcome p {
-      margin: 0;
-      color: #e1dfff;
-      font-size: 14px;
-      line-height: 1.8;
-      max-width: 610px;
+      margin:0;
+      color:#e1dfff;
+      font-size:14px;
+      line-height:1.8;
+      max-width:610px;
     }
 
-    .heading {
-      margin: 30px 0 15px;
-    }
-
-    .heading h2 {
-      color: var(--navy);
-      font-size: 21px;
-      margin: 0 0 6px;
-    }
-
-    .heading p {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0;
-    }
+    .heading { margin:30px 0 15px; }
+    .heading h2 { color:var(--navy); font-size:21px; margin:0 0 6px; }
+    .heading p { color:var(--muted); font-size:13px; margin:0; }
 
     .stats {
-      display: grid;
-      grid-template-columns: repeat(3,minmax(0,1fr));
-      gap: 16px;
-      margin-bottom: 27px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+      margin-bottom:27px;
     }
 
     .stat {
-      background: var(--white);
-      padding: 21px;
-      border: 1px solid var(--border);
-      border-radius: 19px;
-      box-shadow: var(--shadow);
+      background:var(--white);
+      padding:21px;
+      border:1px solid var(--border);
+      border-radius:19px;
+      box-shadow:var(--shadow);
     }
 
     .stat-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:14px;
     }
 
-    .stat small {
-      color: var(--muted);
-      font-size: 12px;
-    }
+    .stat small { color:var(--muted); font-size:12px; }
 
     .stat-icon {
-      width: 35px;
-      height: 35px;
-      display: grid;
-      place-items: center;
-      background: #f0efff;
-      color: var(--blue);
-      border-radius: 11px;
-      font-size: 17px;
+      width:35px;
+      height:35px;
+      display:grid;
+      place-items:center;
+      background:#f0efff;
+      color:var(--blue);
+      border-radius:11px;
+      font-size:17px;
     }
 
     .stat strong {
-      display: block;
-      color: var(--navy);
-      font-size: 30px;
-      letter-spacing: -.5px;
+      display:block;
+      color:var(--navy);
+      font-size:30px;
+      letter-spacing:-.5px;
     }
 
     .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 22px;
-      box-shadow: var(--shadow);
+      background:var(--white);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:22px;
+      box-shadow:var(--shadow);
     }
 
     .card-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    .card h3 {
-      color: var(--navy);
-      font-size: 17px;
-      margin: 0 0 6px;
-    }
+    .card h3 { color:var(--navy); font-size:17px; margin:0 0 6px; }
 
-    .muted {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
+    .muted { color:var(--muted); font-size:12px; line-height:1.6; }
 
     .refresh-label {
-      color: var(--green);
-      background: #edfaf5;
-      border-radius: 30px;
-      padding: 7px 11px;
-      font-size: 10px;
-      font-weight: 750;
+      color:var(--green);
+      background:#edfaf5;
+      border-radius:30px;
+      padding:7px 11px;
+      font-size:10px;
+      font-weight:750;
+    }
+
+    .actions {
+      display:flex;
+      justify-content:flex-end;
+      margin-top:17px;
+    }
+
+    .clear-btn {
+      border:1px solid #ffd8dc;
+      background:#fff0f1;
+      color:#b42332;
+      padding:10px 15px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .clear-btn:hover { background:#ffe1e4; }
+
+    .clear-btn:disabled {
+      opacity:.6;
+      cursor:not-allowed;
     }
 
     .table-wrap {
-      overflow-x: auto;
-      margin-top: 18px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
+      overflow-x:auto;
+      margin-top:18px;
+      border:1px solid var(--border);
+      border-radius:13px;
     }
 
-    table {
-      width: 100%;
-      min-width: 950px;
-      border-collapse: collapse;
-    }
+    table { width:100%; min-width:950px; border-collapse:collapse; }
 
     th,td {
-      text-align: left;
-      padding: 14px 12px;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-      vertical-align: middle;
+      text-align:left;
+      padding:14px 12px;
+      border-bottom:1px solid var(--border);
+      font-size:12px;
+      vertical-align:middle;
     }
 
     th {
-      color: #777895;
-      background: #f8f8ff;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .6px;
+      color:#777895;
+      background:#f8f8ff;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.6px;
     }
 
-    tbody tr:hover {
-      background: #fafaff;
-    }
+    tbody tr:hover { background:#fafaff; }
+    tbody tr:last-child td { border-bottom:0; }
 
-    tbody tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .id {
-      color: var(--blue);
-      font-family: monospace;
-      font-size: 11px;
-    }
-
-    .score {
-      color: var(--green);
-      font-weight: 750;
-    }
+    .id { color:var(--blue); font-family:monospace; font-size:11px; }
+    .score { color:var(--green); font-weight:750; }
 
     .flag {
-      display: inline-block;
-      background: #fff4e3;
-      color: var(--orange);
-      padding: 6px 9px;
-      border-radius: 8px;
-      font-size: 10px;
-      line-height: 1.5;
-      max-width: 210px;
+      display:inline-block;
+      background:#fff4e3;
+      color:var(--orange);
+      padding:6px 9px;
+      border-radius:8px;
+      font-size:10px;
+      line-height:1.5;
+      max-width:210px;
     }
 
     .empty {
-      text-align: center;
-      padding: 35px 15px;
-      color: var(--muted);
-      font-size: 13px;
+      text-align:center;
+      padding:35px 15px;
+      color:var(--muted);
+      font-size:13px;
     }
 
     .error {
-      color: #b42332;
-      background: #fff0f1;
-      border: 1px solid #ffd8dc;
-      padding: 13px;
-      border-radius: 11px;
-      font-size: 12px;
+      color:#b42332;
+      background:#fff0f1;
+      border:1px solid #ffd8dc;
+      padding:13px;
+      border-radius:11px;
+      font-size:12px;
     }
 
+    .message {
+      margin-top:12px;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .success { color:var(--green); }
+    .failure { color:#b42332; }
+
     footer {
-      text-align: center;
-      padding: 22px 15px;
-      color: #8989a4;
-      font-size: 11px;
+      text-align:center;
+      padding:22px 15px;
+      color:#8989a4;
+      font-size:11px;
     }
 
     @media(max-width:650px) {
-      header {
-        padding: 14px 17px;
-      }
-
-      main {
-        padding: 20px 13px 35px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-        gap: 11px;
-      }
-
-      .stat {
-        padding: 17px;
-      }
-
-      .stat strong {
-        font-size: 25px;
-      }
-
-      .welcome {
-        padding: 25px 21px;
-        border-radius: 20px;
-      }
-
-      .card {
-        padding: 15px;
-      }
-
-      .status {
-        font-size: 10px;
-      }
+      header { padding:14px 17px; }
+      main { padding:20px 13px 35px; }
+      .stats { grid-template-columns:1fr; gap:11px; }
+      .stat { padding:17px; }
+      .stat strong { font-size:25px; }
+      .welcome { padding:25px 21px; border-radius:20px; }
+      .card { padding:15px; }
+      .status { font-size:10px; }
     }
   </style>
 </head>
@@ -381,9 +330,7 @@
     </div>
   </div>
 
-  <div class="status" id="connection">
-    ● Connecting...
-  </div>
+  <div class="status" id="connection">● Connecting...</div>
 </header>
 
 <main>
@@ -406,7 +353,6 @@
   </section>
 
   <section class="stats">
-
     <div class="stat">
       <div class="stat-top">
         <small>Total Submissions</small>
@@ -430,7 +376,6 @@
       </div>
       <strong id="version">—</strong>
     </div>
-
   </section>
 
   <section class="heading">
@@ -439,15 +384,11 @@
   </section>
 
   <section class="card">
-
     <div class="card-head">
       <div>
         <h3>Submission records</h3>
-        <p class="muted" id="updated">
-          Loading submission records...
-        </p>
+        <p class="muted" id="updated">Loading submission records...</p>
       </div>
-
       <span class="refresh-label">● AUTO REFRESH · 3 SEC</span>
     </div>
 
@@ -469,14 +410,19 @@
 
         <tbody id="rows">
           <tr>
-            <td colspan="9" class="empty">
-              Loading submissions...
-            </td>
+            <td colspan="9" class="empty">Loading submissions...</td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <div class="actions">
+      <button type="button" class="clear-btn" id="clearBtn">
+        Clear All Submissions
+      </button>
+    </div>
+
+    <p id="clearMessage" class="message" role="status" aria-live="polite"></p>
   </section>
 
 </main>
@@ -491,6 +437,8 @@
 
 const $ = id => document.getElementById(id);
 
+let loading = false;
+
 function safe(value) {
   return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&": "&amp;",
@@ -503,17 +451,14 @@ function safe(value) {
 
 function formatDate(value) {
   if (!value) return "—";
-
   const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "—";
-  }
-
-  return date.toLocaleString();
+  return Number.isNaN(date.getTime()) ? "—" : date.toLocaleString();
 }
 
 async function loadDashboard() {
+  if (loading) return;
+  loading = true;
+
   const connection = $("connection");
 
   try {
@@ -526,10 +471,7 @@ async function loadDashboard() {
     }
 
     const data = await response.json();
-
-    const attempts = Array.isArray(data.attempts)
-      ? data.attempts
-      : [];
+    const attempts = Array.isArray(data.attempts) ? data.attempts : [];
 
     connection.textContent = "● Connected";
     connection.style.color = "#d9f7e9";
@@ -537,32 +479,24 @@ async function loadDashboard() {
     $("total").textContent = attempts.length;
 
     const uniqueStudents = new Set(
-      attempts.map(attempt =>
-        attempt.student || "Student"
-      )
+      attempts.map(attempt => attempt.student || "Student")
     );
 
     $("students").textContent = uniqueStudents.size;
-
     $("version").textContent =
-      data.lessonVersion != null
-        ? "v" + data.lessonVersion
-        : "—";
+      data.lessonVersion != null ? "v" + data.lessonVersion : "—";
 
     $("updated").textContent =
       "Last updated: " + new Date().toLocaleTimeString();
 
     const sorted = [...attempts].sort((a, b) =>
-      new Date(b.receivedAt || 0) -
-      new Date(a.receivedAt || 0)
+      new Date(b.receivedAt || 0) - new Date(a.receivedAt || 0)
     );
 
     if (!sorted.length) {
       $("rows").innerHTML = `
         <tr>
-          <td colspan="9" class="empty">
-            No submissions received yet.
-          </td>
+          <td colspan="9" class="empty">No submissions received yet.</td>
         </tr>
       `;
       return;
@@ -575,57 +509,32 @@ async function loadDashboard() {
         : 0;
 
       const totalQuestions =
-        Number.isFinite(Number(attempt.total)) &&
-        attempt.total !== null
-          ? Number(attempt.total)
-          : null;
+        Number.isFinite(Number(attempt.total)) && attempt.total !== null
+          ? Number(attempt.total) : null;
 
       const score =
-        Number.isFinite(Number(attempt.score)) &&
-        attempt.score !== null
-          ? Number(attempt.score)
-          : null;
+        Number.isFinite(Number(attempt.score)) && attempt.score !== null
+          ? Number(attempt.score) : null;
 
       const answerLabel = totalQuestions !== null
-        ? `${answers} of ${totalQuestions}`
-        : `${answers} saved`;
+        ? `${answers} of ${totalQuestions}` : `${answers} saved`;
 
       const scoreLabel = score !== null && totalQuestions !== null
-        ? `<span class="score">${score}/${totalQuestions}</span>`
-        : "—";
+        ? `<span class="score">${score}/${totalQuestions}</span>` : "—";
 
       const versionNote = attempt.note
-        ? `<span class="flag">${safe(attempt.note)}</span>`
-        : "—";
+        ? `<span class="flag">${safe(attempt.note)}</span>` : "—";
 
       return `
         <tr>
           <td>${index + 1}</td>
-
           <td>${safe(attempt.student || "Student")}</td>
-
-          <td>${safe(
-            attempt.lessonTitle || attempt.lessonId || "—"
-          )}</td>
-
-          <td>
-            <span class="id">
-              ${safe(String(attempt.id || "").slice(0, 8))}
-            </span>
-          </td>
-
-          <td>
-            ${attempt.lessonVersion != null
-              ? "v" + safe(attempt.lessonVersion)
-              : "—"}
-          </td>
-
+          <td>${safe(attempt.lessonTitle || attempt.lessonId || "—")}</td>
+          <td><span class="id">${safe(String(attempt.id || "").slice(0, 8))}</span></td>
+          <td>${attempt.lessonVersion != null ? "v" + safe(attempt.lessonVersion) : "—"}</td>
           <td>${answerLabel}</td>
-
           <td>${scoreLabel}</td>
-
           <td>${safe(formatDate(attempt.receivedAt))}</td>
-
           <td>${versionNote}</td>
         </tr>
       `;
@@ -634,14 +543,59 @@ async function loadDashboard() {
   } catch (error) {
     connection.textContent = "● Disconnected";
     connection.style.color = "#ffb5bb";
-
-    $("updated").innerHTML =
-      `<span class="error">${safe(error.message)}</span>`;
+    $("updated").textContent = error.message;
+  } finally {
+    loading = false;
   }
 }
 
-loadDashboard();
+async function clearSubmissions() {
+  const confirmed = confirm(
+    "Are you sure you want to clear ALL student submissions?\n\nThis cannot be undone. The lesson version will also reset to v1."
+  );
 
+  if (!confirmed) return;
+
+  const button = $("clearBtn");
+  const message = $("clearMessage");
+
+  button.disabled = true;
+  button.textContent = "Clearing...";
+  message.textContent = "";
+  message.className = "message";
+
+  try {
+    const response = await fetch("/api/demo/reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({})
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "Could not clear submissions.");
+    }
+
+    message.textContent = "All submissions cleared successfully.";
+    message.className = "message success";
+
+    await loadDashboard();
+
+  } catch (error) {
+    message.textContent = "Error: " + error.message;
+    message.className = "message failure";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Clear All Submissions";
+  }
+}
+
+$("clearBtn").addEventListener("click", clearSubmissions);
+
+loadDashboard();
 setInterval(loadDashboard, 3000);
 </script>
 
